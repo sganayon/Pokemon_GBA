@@ -364,13 +364,13 @@ void Combatdeco::majbarrevie(float ratio, char pkm)
 	if (pkm == 'E') {
 		Sbarrevie.setTextureRect(sf::IntRect(0, 0, 181 * ratio, 11));
 		if (ratio > 0.5) { Sbarrevie.setColor(sf::Color::Green); }
-		else if (ratio > 0.1) { Sbarrevie.setColor(sf::Color::Yellow); }
+		else if (ratio > 0.2) { Sbarrevie.setColor(sf::Color::Yellow); }
 		else { { Sbarrevie.setColor(sf::Color::Red); } }
 	}
 	else {
 		Sbarreviepkmsav.setTextureRect(sf::IntRect(0, 0, 181 * ratio, 11));
 		if (ratio > 0.5) { Sbarreviepkmsav.setColor(sf::Color::Green); }
-		else if (ratio > 0.1) { Sbarreviepkmsav.setColor(sf::Color::Yellow); }
+		else if (ratio > 0.2) { Sbarreviepkmsav.setColor(sf::Color::Yellow); }
 		else { { Sbarreviepkmsav.setColor(sf::Color::Red); } }
 	}
 }
@@ -472,4 +472,9 @@ EffectAtt::EffectAtt()
 	Tfeu_burn_1.loadFromFile(feu_burn1str);
 	Tfeu_burn_2.loadFromFile(feu_burn2str);
 	Tfeu_explode.loadFromFile(feu_explodestr);
+	Tfond_closecombat.loadFromFile(fond_closecombatstr);
+	Tpoing.loadFromFile(poingstr);
+	Tredstars.loadFromFile(redstarsstr);
+	Tyellowstars.loadFromFile(yellowstarsstr);
+	Sattaque.setTexture(Tfond_closecombat);
 }

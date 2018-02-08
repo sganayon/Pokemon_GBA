@@ -492,9 +492,25 @@ std::string floattostring(float reel)
 std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtatt, char sens)
 {
 	effect->Sattaque.setRotation(0.f); // put the rotation to 0
-	effect->Sattaque.setOrigin(0.f, 0.f); //put the origine to top left and corner
 	effect->Sattaque.setScale(1.f, 1.f); //put the scale to the normal
+	effect->Sattaque.setOrigin(0.f, 0.f); //put the origine to top left and corner
 	effect->Sattaque.setColor(sf::Color::White); //put the color by default
+
+	effect->Sattaque1.setRotation(0.f); // put the rotation to 0
+	effect->Sattaque1.setScale(1.f, 1.f); //put the scale to the normal
+	effect->Sattaque1.setOrigin(0.f, 0.f); //put the origine to top left and corner
+	effect->Sattaque1.setColor(sf::Color::White); //put the color by default
+
+	effect->Sattaque2.setRotation(0.f); // put the rotation to 0
+	effect->Sattaque2.setScale(1.f, 1.f); //put the scale to the normal
+	effect->Sattaque2.setOrigin(0.f, 0.f); //put the origine to top left and corner
+	effect->Sattaque2.setColor(sf::Color::White); //put the color by default
+
+	effect->Sattaquefond.setRotation(0.f); // put the rotation to 0
+	effect->Sattaquefond.setScale(1.f, 1.f); //put the scale to the normal
+	effect->Sattaquefond.setOrigin(0.f, 0.f); //put the origine to top left and corner
+	effect->Sattaquefond.setColor(sf::Color::White); //put the color by default
+
 	switch (dgtatt)
 	{
 	case 60:
@@ -527,7 +543,24 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 				return"rushF";
 			}
 		}
-		else if (type == "Fighting") { return " "; }
+		else if (type == "Fighting") 
+		{ 
+			if(sens == 'B')
+			{
+				effect->Sattaque.setTexture(effect->Tpoing, true);
+				effect->Sattaque.setPosition(210.f, 50.f);
+				effect->Sattaque1.setTexture(effect->Tpoing, true);
+				effect->Sattaque1.setPosition(800.f, 50.f);
+			}
+			else
+			{
+				effect->Sattaque.setTexture(effect->Tpoing, true);
+				effect->Sattaque.setPosition(-190.f, 250.f);
+				effect->Sattaque1.setTexture(effect->Tpoing, true);
+				effect->Sattaque1.setPosition(410.f, 250.f);
+			}
+			return "Catch";
+		}
 		else if (type == "Flying") { return " "; }
 		else if (type == "Poison") { return " "; }
 		else if (type == "Ground") { return " "; }
@@ -558,8 +591,30 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 		else { return " "; }//fairy
 		break;
 	case 100:
-		if (type == "Normal") { return " "; }//red scale y pkm 
-		else if (type == "Fighting") { return " "; }
+		if (type == "Normal") 
+		{ 
+			if (sens == 'B'){return "ecrasemenB";}
+			else{return "ecrasemenF";} 
+		}//scale pkm
+		else if (type == "Fighting") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tpoing);
+			effect->Sattaque1.setTexture(effect->Tpoing);
+			effect->Sattaque2.setTexture(effect->Tpoing);
+			if (sens=='B')
+			{
+				effect->Sattaque.setPosition(360.f, 0.f);
+				effect->Sattaque1.setPosition(510.f, 50.f);
+				effect->Sattaque2.setPosition(660.f, 100.f);
+			}
+			else 
+			{
+				effect->Sattaque.setPosition(110.f, 225.f);
+				effect->Sattaque1.setPosition(260.f, 300.f);
+				effect->Sattaque2.setPosition(10.f, 225.f);
+			}
+			return "Furie"; 
+		}
 		else if (type == "Flying") { return " "; }
 		else if (type == "Poison") { return " "; }
 		else if (type == "Ground") { return " "; }
@@ -599,7 +654,34 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 				return "comboF"; 
 			}
 		}
-		else if (type == "Fighting") { return " "; }
+		else if (type == "Fighting") 
+		{ 
+			effect->Sattaquefond.setTexture(effect->Tfond_closecombat, true);
+			effect->Sattaquefond.setPosition(0, 0);
+			effect->Sattaquefond.setScale(4, 1);
+			if(sens == 'B')
+			{
+				effect->Sattaque1.setTexture(effect->Tpoing, true);
+				effect->Sattaque1.setOrigin(effect->Sattaque1.getOrigin().x + 75, effect->Sattaque1.getOrigin().y + 75); // origine is in the center
+				effect->Sattaque1.setPosition(510.f + 75.f, 60.f + 75.f);
+
+				effect->Sattaque2.setOrigin(effect->Sattaque2.getOrigin().x + 75/2 , effect->Sattaque2.getOrigin().y + 75/2 );
+				effect->Sattaque2.setPosition(510.f + 70.f , 60.f + 70.f );
+				effect->Sattaque2.setScale(5.f, 5.f);
+			}
+			else
+			{
+				effect->Sattaque1.setTexture(effect->Tpoing, true);
+				effect->Sattaque1.setOrigin(effect->Sattaque1.getOrigin().x + 75, effect->Sattaque1.getOrigin().y + 75); // origine is in the center
+				effect->Sattaque1.setPosition(110.f + 75.f, 250.f + 75.f);
+
+				effect->Sattaque2.setOrigin(effect->Sattaque2.getOrigin().x + 75 / 2, effect->Sattaque2.getOrigin().y + 75 / 2);
+				effect->Sattaque2.setPosition(110.f + 70.f, 250.f + 70.f);
+				effect->Sattaque2.setScale(5.f, 5.f);
+			}
+			return "OnePunch";
+			 
+		}
 		else if (type == "Flying") { return " "; }
 		else if (type == "Poison") { return " "; }
 		else if (type == "Ground") { return  " "; }

@@ -196,7 +196,7 @@ void unlockatt2(pokemon* p, PokemonType type)
 		p->setdgt2(80);
 		break;
 	case Fire:
-		p->setatt2("Brulure");
+		p->setatt2("Fireball");
 		p->setdgt2(80);
 		break;
 	case Grass:
@@ -277,7 +277,7 @@ void unlockatt3(pokemon* p, PokemonType type)
 		p->setdgt3(100);
 		break;
 	case Fire:
-		p->setatt3("magma");
+		p->setatt3("Flamboiment");
 		p->setdgt3(100);
 		break;
 	case Grass:

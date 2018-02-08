@@ -1185,8 +1185,10 @@ void affnoircmbt2(sf::RenderWindow* window, sf::Sprite fnoir, Map* mapptr, bool 
 void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkmsav, sf::Sprite Spkm, EffectAtt* effect, std::string attstr, sf::Time time)
 {
 	int tempo = 100;
-	sf::Sprite Satt;
-	int i = time.asMilliseconds()/100;
+	sf::Sprite Spkmattquer; //sprite temporaire pour les animation du pkm attaquer
+	Spkmattquer.setOrigin(0, 0);
+	Spkmattquer.setScale(1, 1);
+	float i = time.asMilliseconds()/100;
 	if (i >= 20) { i = i - 20; }
 
 	if (attstr == "chargeB")
@@ -1198,186 +1200,191 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 	}
 	else if (attstr == "chargeF")
 	{
-			if (i<10) { effect->Sattaque.setScale(0.1*i, 0.1*i); }
-			if (i == 10) { effect->Sattaque.setScale(0.1, 0.1); }                   //double animation
-			if (i > 10) { effect->Sattaque.setScale(0.1*(i - 10), 0.1*(i - 10)); }
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);//on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		if (i<10) { effect->Sattaque.setScale(0.1*i, 0.1*i); }                //double animation
+		if (i > 10) { effect->Sattaque.setScale(0.1*(i - 10), 0.1*(i - 10)); }
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		window->draw(effect->Sattaque);
 	}
 	else if (attstr == "rushB")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 0) { window->draw(effect->Sattaque); }
 	}
 	else if (attstr == "rushF")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 0) { window->draw(effect->Sattaque); }
 	}
 	else if (attstr == "comboB")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			if (i % 2 == 0) { effect->Sattaque.setTexture(effect->Tcombo_1); }
+			if ((int)i % 2 == 0) { effect->Sattaque.setTexture(effect->Tcombo_1); }
 			else { effect->Sattaque.setTexture(effect->Tcombo_2); }
-			switch (i)
+			if ((i >= 2) && (i < 4)) 
 			{
-			case 2:
 				effect->Sattaque.move(75, 0);
 				effect->Sattaque.setScale(1, 1);
-				break;
-			case 4:
+			}
+			else if ((i >= 4) && (i < 6))
+			{
 				effect->Sattaque.move(-150, 0);
 				effect->Sattaque.setScale(1.25, 1.25);
-				break;
-			case 6:
+			}
+			else if ((i >= 6) && (i < 8))
+			{
 				effect->Sattaque.move(75, -75);
 				effect->Sattaque.setScale(1.5, 1.5);
-				break;
-			case 8:
+			}
+			else if ((i >= 8) && (i < 10))
+			{
 				effect->Sattaque.move(0, 150);
 				effect->Sattaque.setScale(1.75, 1.75);
-				break;
-			case 10:
-				effect->Sattaque.move(0, -75);
+			}
+			else if (i >= 10) 
+			{
 				effect->Sattaque.setScale(2, 2);
 				effect->Sattaque.setColor(sf::Color::Color(255, 0, 0, 255));
-				break;
-			default:
-				break;
 			}
-			window->clear();
 			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
 			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		
 	}
 	else if (attstr == "comboF")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 0) { window->draw(effect->Sattaque); }
 	}
-	else if (attstr == "feuballB") {
-		for (int i = 0; i < 20; i++)
-		{
-			//effect->RTeffect.clear();
-			//effect->RTeffect.draw(effect->Sattaque);
-			//effect->RTeffect.display();
-			//Satt.setTexture(effect->RTeffect.getTexture());
-
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			window->draw(effect->Sattaque);
-			//window->draw(Satt);
-			window->display();
-
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			effect->Sattaque.move(10.f, -7.f);
-			//Satt.move(10.f,-7.f);
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+	else if (attstr == "feuballB") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		effect->Sattaque.move(10*i, -7*i);
+		window->draw(effect->Sattaque);
 	}
-	else if (attstr == "feuballF") {
-		for (int i = 0; i < 20; i++)
-		{
-			//effect->RTeffect.clear();
-			//effect->RTeffect.draw(effect->Sattaque);
-			//effect->RTeffect.display();
-			//Satt.setTexture(effect->RTeffect.getTexture());
-			//Satt.move(-10.f, +7.f);
-
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			//window->draw(Satt);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			effect->Sattaque.move(-10.f, 7.f);
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);//on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm equipe
-			window->display();
-		}
+	else if (attstr == "feuballF") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		effect->Sattaque.move(-10 * i, 7 * i);
+		window->draw(effect->Sattaque);
 	}
 	else if (attstr == "feuburn")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			if (i % 2 == 1) { effect->Sattaque.setTexture(effect->Tfeu_burn_2); }
-			else { effect->Sattaque.setTexture(effect->Tfeu_burn_1); }
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 1) { effect->Sattaque.setTexture(effect->Tfeu_burn_2); }
+		else { effect->Sattaque.setTexture(effect->Tfeu_burn_1); }
+		window->draw(effect->Sattaque);
 	}
 	else if (attstr == "feuexplode")
 	{
-		for (int i = 0; i < 20; i++)
-		{
-			//if(i<10){ effect->Sattaque.setScale(0.1*i, 0.1*i); }
-			//if(i==10){ effect->Sattaque.setScale(0.1,0.1); }                   double explosion
-			//if (i > 10) { effect->Sattaque.setScale(0.1*(i-10), 0.1*(i-10)); }
-			effect->Sattaque.setScale(0.5*i, 0.5*i);
-			window->clear();
-			afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else { 
-		window->clear();
+		effect->Sattaque.setScale(0.5*i, 0.5*i);
 		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-		window->display();
-		std::this_thread::sleep_for(std::chrono::milliseconds(tempo * 20)); }
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "ecrasemenB")
+	{
+		Spkmattquer = Spkmsav;
+		Spkmattquer.setOrigin(118,0);
+		Spkmattquer.setPosition(Spkmsav.getPosition().x + 118, Spkmsav.getPosition().y + (176 / 20)*i); //the scale make the bottom closer to the top but the origin is on the top so we need to move the sprite downward
+		Spkmattquer.setScale(1,(1.f - i/20.f));//reduce the scale of the pkm 
+		window->draw(cmbtdeco->Sfondcmbt);
+		window->draw(cmbtdeco->textnompkm);
+		window->draw(cmbtdeco->textnompkmsav);
+		window->draw(cmbtdeco->textviepkm);
+		window->draw(cmbtdeco->textviepkmsav);
+		window->draw(cmbtdeco->Sbarrevie);
+		window->draw(cmbtdeco->Sbarreviepkmsav);
+		window->draw(cmbtdeco->comm1);
+		window->draw(cmbtdeco->comm2);
+		window->draw(Spkmattquer);
+		window->draw(Spkm);
+	}
+	else if (attstr == "ecrasemenF")
+	{
+		Spkmattquer = Spkm;
+		Spkmattquer.setOrigin(118,0);
+		Spkmattquer.setPosition(Spkm.getPosition().x + 118, Spkm.getPosition().y + (176 / 20)*i);
+		Spkmattquer.setScale(1, (1.f - i / 20.f));//reduce the scale of the pkm 
+		window->draw(cmbtdeco->Sfondcmbt);
+		window->draw(cmbtdeco->textnompkm);
+		window->draw(cmbtdeco->textnompkmsav);
+		window->draw(cmbtdeco->textviepkm);
+		window->draw(cmbtdeco->textviepkmsav);
+		window->draw(cmbtdeco->Sbarrevie);
+		window->draw(cmbtdeco->Sbarreviepkmsav);
+		window->draw(cmbtdeco->comm1);
+		window->draw(cmbtdeco->comm2);
+		window->draw(Spkmattquer);
+		window->draw(Spkmsav);
+	}
+	else if (attstr == "Catch")
+	{
+		if ((i>5)&&(i < 15) )
+		{
+			effect->Sattaque.move(25 * (i-5), 0);
+			effect->Sattaque1.move(-25 * (i-5), 0);
+		}
+		else if (i>=15){
+			effect->Sattaque.move(25 * 10, 0);
+			effect->Sattaque1.move(-25 * 10, 0);
+		}
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		window->draw(effect->Sattaque);
+		window->draw(effect->Sattaque1);
+	}
+	else if (attstr == "Furie")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i%2 == 0) { effect->Sattaque.move(0, 100);}
+		else { effect->Sattaque2.move(0, -100); }
+		if ((int)i % 3 == 0) { window->draw(effect->Sattaque); }
+		if ((int)i % 3 == 1) { window->draw(effect->Sattaque1); }
+		if ((int)i % 3 == 2) { window->draw(effect->Sattaque2); }
 
+	}
+	else if (attstr == "OnePunch")
+	{
+		
+		effect->Sattaquefond.move(-120 * i, 0);
+		if (i<15){
+			effect->Sattaque1.setScale(4.f - (i / 5.f), 4.f - (i / 5.f));
+			window->draw(cmbtdeco->Sfondcmbt);
+			window->draw(cmbtdeco->textnompkm);
+			window->draw(cmbtdeco->textnompkmsav);
+			window->draw(cmbtdeco->textviepkm);
+			window->draw(cmbtdeco->textviepkmsav);
+			window->draw(cmbtdeco->Sbarrevie);
+			window->draw(cmbtdeco->Sbarreviepkmsav);
+			window->draw(effect->Sattaquefond);
+			window->draw(effect->Sattaque1);
+			window->draw(Spkmsav);
+			window->draw(Spkm);
+			window->draw(cmbtdeco->comm1);
+			window->draw(cmbtdeco->comm2);
+		}
+		else 
+		{
+			if ((int)i % 2 == 0) { effect->Sattaque2.setTexture(effect->Tredstars, true); }
+			else { effect->Sattaque2.setTexture(effect->Tyellowstars, true); }
+			window->draw(cmbtdeco->Sfondcmbt);
+			window->draw(cmbtdeco->textnompkm);
+			window->draw(cmbtdeco->textnompkmsav);
+			window->draw(cmbtdeco->textviepkm);
+			window->draw(cmbtdeco->textviepkmsav);
+			window->draw(cmbtdeco->Sbarrevie);
+			window->draw(cmbtdeco->Sbarreviepkmsav);
+			window->draw(effect->Sattaquefond);
+			window->draw(effect->Sattaque2);
+			window->draw(Spkmsav);
+			window->draw(Spkm);
+			window->draw(cmbtdeco->comm1);
+			window->draw(cmbtdeco->comm2);
+			window->draw(effect->Sattaque1);
+		}
+		
+		
+	}
+	else 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+	}
 }
 
 void afffondcmbt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkmsav, sf::Sprite Spkm)

@@ -415,18 +415,33 @@ public :
 	sf::Texture Tfeu_burn_1;
 	sf::Texture Tfeu_burn_2;
 	sf::Texture Tfeu_explode;
+	sf::Texture Tfond_closecombat;
+	sf::Texture Tpoing;
+	sf::Texture Tredstars;
+	sf::Texture Tyellowstars;
+
 
 	sf::Sprite Sattaque;
+	sf::Sprite Sattaque1;
+	sf::Sprite Sattaque2;
+	sf::Sprite Sattaquefond;
 
 private:
 	const std::string chargestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/charge.png";
+	//normal
 	const std::string rushstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/rush.png";
 	const std::string combo1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/charge.png";
 	const std::string combo2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/combo2.png";
+	//fire
 	const std::string feu_ballstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_ball.png";
 	const std::string feu_burn1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_burn_1.png";
 	const std::string feu_burn2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_burn_2.png";
 	const std::string feu_explodestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_explode.png";
+	//combat
+	const std::string fond_closecombatstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fond_closecombat.png";
+	const std::string poingstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/poing.png";
+	const std::string redstarsstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/redstars.png";
+	const std::string yellowstarsstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/yellowstars.png";
 
 public:
 	EffectAtt();
