@@ -50,7 +50,7 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 	sf::Clock clk;
 	sf::Time time;
 	sf::Sprite tmp;
-	std::string text("bienvenu visiteur");
+	std::string text("Bienvenue visiteur");
 	std::string cheminsave("C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/save1.txt");
 	std::string attstr("...");
 

@@ -561,8 +561,30 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			}
 			return "Catch";
 		}
-		else if (type == "Flying") { return " "; }
-		else if (type == "Poison") { return " "; }
+		else if (type == "Flying") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tspike, true);
+			if (sens == 'B') 
+			{
+				effect->Sattaque.setPosition(150.f, 230.f);
+				return "spikeB";
+			}
+			else 
+			{
+				effect->Sattaque.setOrigin(175.f / 2.f, 175.f / 2.f);
+				effect->Sattaque.setRotation(180.F);
+				effect->Sattaque.setPosition(465.f+175/2, 30.f+175/2);
+				return "spikeF";
+			}
+		}
+		else if (type == "Poison") 
+		{
+			effect->Sattaque.setTexture(effect->Tspore1, true);
+			effect->Sattaque.setOrigin(50, 50);
+			if (sens == 'B') { effect->Sattaque.setPosition(550, 95); }
+			else { effect->Sattaque.setPosition(150, 300); }
+			return "spore"; 
+		}
 		else if (type == "Ground") { return " "; }
 		else if (type == "Rock") { return " "; }
 		else if (type == "Bug") { return " "; }
@@ -571,14 +593,25 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 		else if (type == "Fire") 
 		{ 
 			effect->Sattaque.setTexture(effect->Tfeu_ball, true); 
+			effect->Sattaque1.setTexture(effect->Tflames, true);
+			effect->Sattaque1.setOrigin(100, 100);
+			effect->Sattaque2.setTexture(effect->Tboulefeu1, true);
+			effect->Sattaque2.setOrigin(25, 25);
 			if (sens == 'B') //pkm equipe position basse attaquant
 			{
 				effect->Sattaque.setPosition(160.f,220.f);
 				effect->Sattaque.setOrigin(effect->Sattaque.getOrigin().x + 200, effect->Sattaque.getOrigin().y + 160); //the rotation move around the origin so it is place in the bottom right and corner to turn into the top left and corner (the origin) and thus place correctly the img
 				effect->Sattaque.rotate(180.f); //base image is oriented pkm sauv to pkm equipe we need to turn it in the other direction
+				effect->Sattaque1.setPosition(575, 120);
+				effect->Sattaque2.setPosition(260, 270);
 				return "feuballB";
 			}
-			else { effect->Sattaque.setPosition(360.f, 80.f); return "feuballF"; } //pkm sauv position haute
+			else 
+			{
+				effect->Sattaque.setPosition(360.f, 80.f); 
+				effect->Sattaque1.setPosition(175, 320); 
+				effect->Sattaque2.setPosition(460, 150);
+				return "feuballF"; } //pkm sauv position haute
 			
 		} 
 		else if (type == "Grass"){ return " "; }
@@ -598,25 +631,63 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 		}//scale pkm
 		else if (type == "Fighting") 
 		{ 
-			effect->Sattaque.setTexture(effect->Tpoing);
-			effect->Sattaque1.setTexture(effect->Tpoing);
-			effect->Sattaque2.setTexture(effect->Tpoing);
+			effect->Sattaque.setTexture(effect->Tpoing, true);
+			effect->Sattaque1.setTexture(effect->Tpoing, true);
+			effect->Sattaque2.setTexture(effect->Tpoing, true);
+			effect->Sattaque.setScale(0.5, 0.5);
+			effect->Sattaque1.setScale(0.5, 0.5);
+			effect->Sattaque2.setScale(0.5, 0.5);
 			if (sens=='B')
 			{
-				effect->Sattaque.setPosition(360.f, 0.f);
-				effect->Sattaque1.setPosition(510.f, 50.f);
-				effect->Sattaque2.setPosition(660.f, 100.f);
+				effect->Sattaque.setPosition(490.f, 50.f);
+				effect->Sattaque1.setPosition(525.f, 100.f);
+				effect->Sattaque2.setPosition(560.f, 50.f);
 			}
 			else 
 			{
-				effect->Sattaque.setPosition(110.f, 225.f);
-				effect->Sattaque1.setPosition(260.f, 300.f);
-				effect->Sattaque2.setPosition(10.f, 225.f);
+				effect->Sattaque.setPosition(50.f, 270.f);
+				effect->Sattaque1.setPosition(110.f, 320.f);
+				effect->Sattaque2.setPosition(170.f, 270.f);
 			}
 			return "Furie"; 
 		}
-		else if (type == "Flying") { return " "; }
-		else if (type == "Poison") { return " "; }
+		else if (type == "Flying") 
+		{ 
+			effect->Sattaquefond.setTexture(effect->Tfondvol, true);
+			effect->Sattaquefond.setPosition(0.f,0.f);
+			effect->Sattaque.setTexture(effect->Tvol1, true);
+			effect->Sattaque1.setTexture(effect->Tvol2, true);
+			effect->Sattaque2.setTexture(effect->Tchoc, true);
+			effect->Sattaque2.setOrigin(100, 50);
+			if(sens == 'B')
+			{ 
+				effect->Sattaque.setPosition(100, 260);
+				effect->Sattaque1.setPosition(100, 100);
+				effect->Sattaque2.setPosition(560, 110);
+				return "volB"; 
+			}
+			else 
+			{ 
+				effect->Sattaque.setPosition(560, 150);
+				effect->Sattaque1.setPosition(560, 90);
+				effect->Sattaque2.setPosition(150, 310);
+				return "volF"; 
+			}
+		}
+		else if (type == "Poison") 
+		{
+			effect->Sattaque.setTexture(effect->Tmudshot1);
+			if (sens == 'B') { effect->Sattaque.setOrigin(0, 300); effect->Sattaque.setPosition(230, 375); effect->Sattaque.setScale(1.25, 1.25); }
+			else 
+			{
+				effect->Sattaque.setOrigin(150, 150); 
+				effect->Sattaque.setRotation(180.f);
+				effect->Sattaque.setOrigin(300, 0);
+				effect->Sattaque.setScale(1.25, 1.25);
+				effect->Sattaque.setPosition(220, 375);
+			}
+			return "mudshot"; 
+		}
 		else if (type == "Ground") { return " "; }
 		else if (type == "Rock") { return " "; }
 		else if (type == "Bug") { return " " ; }
@@ -682,8 +753,39 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			return "OnePunch";
 			 
 		}
-		else if (type == "Flying") { return " "; }
-		else if (type == "Poison") { return " "; }
+		else if (type == "Flying") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tphenix_bleu, true);
+			if (sens == 'B') 
+			{
+				effect->Sattaque.setPosition(-450.f, 0.f);
+				return "phenixB";
+			}
+			else 
+			{
+				effect->Sattaque.setOrigin(225.f, 125.f);
+				effect->Sattaque.setRotation(180.f);
+				effect->Sattaque.setPosition(800.f+225.f, 190.f+125.f);
+				return "phenixF";
+			}
+			
+		}
+		else if (type == "Poison") 
+		{ 
+			if (sens == 'B')
+			{
+				effect->Sattaque.setPosition(235, 245);
+				effect->Sattaque1.setPosition(575, 120);
+				return "magicleavesB";
+			}
+			else 
+			{
+				effect->Sattaque.setPosition(435, 125);
+				effect->Sattaque1.setPosition(150, 300);
+				return "magicleavesF";
+			}
+			 
+		}
 		else if (type == "Ground") { return  " "; }
 		else if (type == "Rock") { return " "; }
 		else if (type == "Bug") { return " "; }
@@ -716,205 +818,3 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 	}
 }
 
-void animeatt(sf::RenderWindow* window, EffectAtt* effect, std::string attstr, sf::Sprite fond)
-{
-	int tempo = 100;
-	sf::Sprite Satt;
-
-	if (attstr == "chargeB") 
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			if(i<10){ effect->Sattaque.setScale(0.1*i, 0.1*i); }
-			if(i==10){ effect->Sattaque.setScale(0.1,0.1); }                   //double animation
-			if (i > 10) { effect->Sattaque.setScale(0.1*(i-10), 0.1*(i-10)); }
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "chargeF") 
-	{ 
-		for (int i = 0; i < 20; i++)
-		{
-			if (i<10) { effect->Sattaque.setScale(0.1*i, 0.1*i); }
-			if (i == 10) { effect->Sattaque.setScale(0.1, 0.1); }                   //double animation
-			if (i > 10) { effect->Sattaque.setScale(0.1*(i - 10), 0.1*(i - 10)); }
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "rushB")
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			window->draw(fond);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "rushF")
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			window->draw(fond);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "comboB")
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			if (i % 2 == 0) { effect->Sattaque.setTexture(effect->Tcombo_1);}
-			else{ effect->Sattaque.setTexture(effect->Tcombo_2);}
-			switch (i)
-			{
-			case 2:
-				effect->Sattaque.move(75,0);
-				effect->Sattaque.setScale(1, 1);
-				break;
-			case 4 :
-				effect->Sattaque.move(-150,0);
-				effect->Sattaque.setScale(1.25, 1.25);
-				break;
-			case 6:
-				effect->Sattaque.move(75,-75);
-				effect->Sattaque.setScale(1.5, 1.5);
-				break;
-			case 8:
-				effect->Sattaque.move(0,150);
-				effect->Sattaque.setScale(1.75, 1.75);
-				break;
-			case 10 :
-				effect->Sattaque.move(0, -75);
-				effect->Sattaque.setScale(2, 2);
-				effect->Sattaque.setColor(sf::Color::Color(255, 0, 0, 255));
-				break;
-			default:
-				break;
-			}
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "comboF")
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			window->draw(fond);
-			if (i % 2 == 0) { window->draw(effect->Sattaque); }
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "feuballB") {
-		for (int i = 0; i < 20; i++)
-		{
-			//effect->RTeffect.clear();
-			//effect->RTeffect.draw(effect->Sattaque);
-			//effect->RTeffect.display();
-			//Satt.setTexture(effect->RTeffect.getTexture());
-
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			//window->draw(Satt);
-			window->display();
-			
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			effect->Sattaque.move(10.f, -7.f);
-			//Satt.move(10.f,-7.f);
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "feuballF") {
-		for (int i = 0; i < 20; i++)
-		{
-			//effect->RTeffect.clear();
-			//effect->RTeffect.draw(effect->Sattaque);
-			//effect->RTeffect.display();
-			//Satt.setTexture(effect->RTeffect.getTexture());
-			//Satt.move(-10.f, +7.f);
-
-			window->clear();
-			window->draw(fond);
-			//window->draw(Satt);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			effect->Sattaque.move(-10.f, 7.f);
-			window->clear();
-			window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm equipe
-			window->display();
-		}
-	}
-	else if (attstr == "feuburn") 
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-			if(i%2 == 1){ effect->Sattaque.setTexture(effect->Tfeu_burn_2); }
-			else{ effect->Sattaque.setTexture(effect->Tfeu_burn_1); }
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else if (attstr == "feuexplode")
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			//if(i<10){ effect->Sattaque.setScale(0.1*i, 0.1*i); }
-			//if(i==10){ effect->Sattaque.setScale(0.1,0.1); }                   double explosion
-			//if (i > 10) { effect->Sattaque.setScale(0.1*(i-10), 0.1*(i-10)); }
-			effect->Sattaque.setScale(0.5*i, 0.5*i);
-			window->clear();
-			window->draw(fond);
-			window->draw(effect->Sattaque);
-			window->display();
-			std::this_thread::sleep_for(std::chrono::milliseconds(tempo));
-		}
-		window->clear();
-		window->draw(fond); //on n'affiche que le fond sans l'attaque pour ne pas la superposer a celle du pkm sauvage
-		window->display();
-	}
-	else { std::this_thread::sleep_for(std::chrono::milliseconds(tempo*20)); }
-}

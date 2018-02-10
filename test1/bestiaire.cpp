@@ -198,21 +198,21 @@ void initbestiaire(especepokemon bestiaire[])
 	bestiaire[14].cheminface = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/dardargnanF.png";
 
 	bestiaire[15].nom = "Pidgey";
-	bestiaire[15].type = Normal;
+	bestiaire[15].type = Flying;
 	bestiaire[15].nbBonbonsPourEvoluer = 12;
 	bestiaire[15].evolvesTo = "Pidgeotto";
 	bestiaire[15].cheminback = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/roucoulB.png";
 	bestiaire[15].cheminface = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/roucoulF.png";
 
 	bestiaire[16].nom = "Pidgeotto";
-	bestiaire[16].type = Normal;
+	bestiaire[16].type = Flying;
 	bestiaire[16].nbBonbonsPourEvoluer = 50;
 	bestiaire[16].evolvesTo = "Pidgeot";
 	bestiaire[16].cheminback = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/roucoupsB.png";
 	bestiaire[16].cheminface = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/roucoupsF.png";
 
 	bestiaire[17].nom = "Pidgeot";
-	bestiaire[17].type = Normal;
+	bestiaire[17].type = Flying;
 	bestiaire[17].nbBonbonsPourEvoluer = 0;
 	bestiaire[17].evolvesTo = NULL;
 	bestiaire[17].cheminback = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/roucarnageB.png";
@@ -233,14 +233,14 @@ void initbestiaire(especepokemon bestiaire[])
 	bestiaire[19].cheminface = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/rattatacF.png";
 
 	bestiaire[20].nom = "Spearow";
-	bestiaire[20].type = Normal;
+	bestiaire[20].type = Flying;
 	bestiaire[20].nbBonbonsPourEvoluer = 50;
 	bestiaire[20].evolvesTo = "Fearow";
 	bestiaire[20].cheminback = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/piafabecB.png";
 	bestiaire[20].cheminface = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/piafabecF.png";
 
 	bestiaire[21].nom = "Fearow";
-	bestiaire[21].type = Normal;
+	bestiaire[21].type = Flying;
 	bestiaire[21].nbBonbonsPourEvoluer = 0;
 	bestiaire[21].evolvesTo = NULL;
 	bestiaire[21].cheminback = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/rapasdepicB.png";

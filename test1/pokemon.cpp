@@ -168,7 +168,7 @@ void unlockatt2(pokemon* p, PokemonType type)
 		p->setdgt2(80);
 		break;
 	case Flying:
-		p->setatt2("Zephir");
+		p->setatt2("Pique");
 		p->setdgt2(80);
 		break;
 	case Poison:
@@ -330,7 +330,7 @@ void unlockatt4(pokemon* p, PokemonType type)
 		p->setdgt4(120);
 		break;
 	case Flying:
-		p->setatt4("Tornade");
+		p->setatt4("Rapace");
 		p->setdgt4(120);
 		break;
 	case Poison:

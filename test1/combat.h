@@ -91,4 +91,3 @@ std::string floattostring(float reel);
 
 std::string  majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtatt, char sens);
 
-void animeatt(sf::RenderWindow* window, EffectAtt* effect, std::string attstr, sf::Sprite fond);

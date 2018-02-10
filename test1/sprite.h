@@ -412,6 +412,9 @@ public :
 	sf::Texture Tcombo_1;
 	sf::Texture Tcombo_2;
 	sf::Texture Tfeu_ball;
+	sf::Texture Tflames;
+	sf::Texture Tboulefeu1;
+	sf::Texture Tboulefeu2;
 	sf::Texture Tfeu_burn_1;
 	sf::Texture Tfeu_burn_2;
 	sf::Texture Tfeu_explode;
@@ -419,8 +422,27 @@ public :
 	sf::Texture Tpoing;
 	sf::Texture Tredstars;
 	sf::Texture Tyellowstars;
+	sf::Texture Tspike;
+	sf::Texture Tfondvol;
+	sf::Texture Tvol1;
+	sf::Texture Tvol2;
+	sf::Texture Tphenix_bleu;
+	sf::Texture Tchoc;
+	sf::Texture Tspore1;
+	sf::Texture Tspore2;
+	sf::Texture Tspore3;
+	sf::Texture Tmudshot1;
+	sf::Texture Tmudshot2;
+	sf::Texture Tmudshot3;
+	sf::Texture Tmleave1;
+	sf::Texture Tmleave2;
+	sf::Texture Tmleave3;
+	sf::Texture Tmstar1;
+	sf::Texture Tmstar2;
+	sf::Texture Tmstar3;
+	sf::Texture Tmstar4;
 
-
+	
 	sf::Sprite Sattaque;
 	sf::Sprite Sattaque1;
 	sf::Sprite Sattaque2;
@@ -434,6 +456,9 @@ private:
 	const std::string combo2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/combo2.png";
 	//fire
 	const std::string feu_ballstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_ball.png";
+	const std::string flamesstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/flames.png";
+	const std::string boulefeu1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/boulefeu1.png";
+	const std::string boulefeu2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/boulefeu2.png";
 	const std::string feu_burn1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_burn_1.png";
 	const std::string feu_burn2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_burn_2.png";
 	const std::string feu_explodestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/feu_explode.png";
@@ -442,7 +467,27 @@ private:
 	const std::string poingstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/poing.png";
 	const std::string redstarsstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/redstars.png";
 	const std::string yellowstarsstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/yellowstars.png";
-
+	//vol
+	const std::string spikestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/spike.png";
+	const std::string vol1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/vol1.png";
+	const std::string vol2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/vol2.png";
+	const std::string fondvolstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fondvol.png";
+	const std::string phenix_bleustr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/phenix_bleu.png";
+	const std::string chocstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/ondechoc.png";
+	//poison
+	const std::string spore1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/spore1.png";
+	const std::string spore2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/spore2.png";
+	const std::string spore3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/spore3.png";
+	const std::string mud1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/mudshot1.png";
+	const std::string mud2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/mudshot2.png";
+	const std::string mud3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/mudshot3.png";
+	const std::string mleave1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_leave1.png";
+	const std::string mleave2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_leave2.png";
+	const std::string mleave3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_leave3.png";
+	const std::string mstar1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star1.png";
+	const std::string mstar2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star2.png";
+	const std::string mstar3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star3.png";
+	const std::string mstar4str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star4.png";
 public:
 	EffectAtt();
 };

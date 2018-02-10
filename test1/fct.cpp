@@ -755,7 +755,7 @@ void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenuc
 					{
 						mesressource->setpokeball(mesressource->getpokeball() - 1);
 						if (attraperpkmsav((float)(pokemonsav->getactPV()) / (float)(pokemonsav->getPV()), stocage, pokemonsav)) { *cmbt = false; *choixmenucmbt = 'M'; }
-						else { combatsav(pokemonptr, pokemonsav, htab, bestiaire, cmbt, IsP1Dead, cmbtpkm); *cmbtatt = true; }// pokemon sauvage attaque si il n'est pas capturer
+						else { combatsav(pokemonptr, pokemonsav, htab, bestiaire, cmbt, IsP1Dead, cmbtpkm); *cmbtatt = true; *choixmenucmbt = 'M';}// pokemon sauvage attaque si il n'est pas capturer
 						 
 					}
 				} // pokeball
@@ -1256,14 +1256,44 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 	else if (attstr == "feuballB") 
 	{
 		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-		effect->Sattaque.move(10*i, -7*i);
-		window->draw(effect->Sattaque);
+		if (i < 5)
+		{
+			if ((int)i % 2 == 0) { effect->Sattaque2.setTexture(effect->Tboulefeu1, true); }
+			else { effect->Sattaque2.setTexture(effect->Tboulefeu2, true); }
+			effect->Sattaque2.setScale(0.3*i, 0.3*i);
+			window->draw(effect->Sattaque2);
+		}
+		else if (i<10)
+		{
+			effect->Sattaque.move(40 * (i-5), -28 * (i-5));
+			window->draw(effect->Sattaque);
+		}
+		else
+		{
+			effect->Sattaque1.scale(0.2*(i - 10), 0.2*(i - 10));
+			window->draw(effect->Sattaque1);
+		}
 	}
 	else if (attstr == "feuballF") 
 	{
 		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-		effect->Sattaque.move(-10 * i, 7 * i);
-		window->draw(effect->Sattaque);
+		if (i < 5)
+		{
+			if ((int)i % 2 == 0) { effect->Sattaque2.setTexture(effect->Tboulefeu1, true); }
+			else { effect->Sattaque2.setTexture(effect->Tboulefeu2, true); }
+			effect->Sattaque2.setScale(0.3*i, 0.3*i);
+			window->draw(effect->Sattaque2);
+		}
+		else if (i<10)
+		{
+			effect->Sattaque.move(-40 * (i-5), 28 * (i-5));
+			window->draw(effect->Sattaque);
+		}
+		else
+		{
+			effect->Sattaque1.scale(0.2*(i - 10), 0.2*(i - 10));
+			window->draw(effect->Sattaque1);
+		}
 	}
 	else if (attstr == "feuburn")
 	{
@@ -1332,11 +1362,32 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 	else if (attstr == "Furie")
 	{
 		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
-		if ((int)i%2 == 0) { effect->Sattaque.move(0, 100);}
-		else { effect->Sattaque2.move(0, -100); }
-		if ((int)i % 3 == 0) { window->draw(effect->Sattaque); }
-		if ((int)i % 3 == 1) { window->draw(effect->Sattaque1); }
-		if ((int)i % 3 == 2) { window->draw(effect->Sattaque2); }
+		if ((int)i%2 == 0) { effect->Sattaque.move(10, -10);}
+		else { effect->Sattaque2.move(-10, 10); }
+		if ((int)i % 3 == 0) 
+		{ 
+			effect->Sattaque2.setTexture(effect->Tcharge, true);
+			effect->Sattaque2.setScale(0.5, 0.5);
+			effect->Sattaque2.setColor(sf::Color::Black);
+			window->draw(effect->Sattaque); 
+			window->draw(effect->Sattaque2); 
+		}
+		if ((int)i % 3 == 1) 
+		{ 
+			effect->Sattaque.setTexture(effect->Tcharge, true);
+			effect->Sattaque.setScale(0.5, 0.5);
+			effect->Sattaque.setColor(sf::Color::Black);
+			window->draw(effect->Sattaque1); 
+			window->draw(effect->Sattaque);
+		}
+		if ((int)i % 3 == 2) 
+		{ 
+			effect->Sattaque1.setTexture(effect->Tcharge, true);
+			effect->Sattaque1.setScale(0.5, 0.5);
+			effect->Sattaque1.setColor(sf::Color::Black);
+			window->draw(effect->Sattaque2); 
+			window->draw(effect->Sattaque1);
+		}
 
 	}
 	else if (attstr == "OnePunch")
@@ -1378,8 +1429,198 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 			window->draw(cmbtdeco->comm2);
 			window->draw(effect->Sattaque1);
 		}
+	}
+	else if (attstr == "spikeB")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if (i < 10)
+		{
+			effect->Sattaque.move(30.f*i, -20.f*i);
+		}
+		else
+		{
+			effect->Sattaque.move(30.f*(i - 10), -20.f*(i - 10));
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "spikeF")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if (i < 10)
+		{
+			effect->Sattaque.move(-30.f*i, 20.f*i);
+		}
+		else
+		{
+			effect->Sattaque.move(-30.f*(i - 10), 20.f*(i - 10));
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "volB") 
+	{
+		window->draw(cmbtdeco->Sfondcmbt);
+		window->draw(cmbtdeco->textnompkm);
+		window->draw(cmbtdeco->textnompkmsav);
+		window->draw(cmbtdeco->textviepkm);
+		window->draw(cmbtdeco->textviepkmsav);
+		window->draw(cmbtdeco->Sbarrevie);
+		window->draw(cmbtdeco->Sbarreviepkmsav);
+		window->draw(effect->Sattaquefond);
+		window->draw(Spkmsav);
+		if (i < 5) 
+		{ 
+			window->draw(effect->Sattaque); 
+		}
+		else if (i<10) 
+		{ 
+			effect->Sattaque1.move(0, -92 * (i-5));
+			window->draw(effect->Sattaque1); 
+		}
+		else if (i<15) 
+		{ 
+			effect->Sattaque1.setOrigin(50, 100);
+			effect->Sattaque1.setPosition(590, -200);
+			effect->Sattaque1.setRotation(180);
+			effect->Sattaque1.move(0, 80 * (i-10));
+			window->draw(effect->Sattaque1); 
+		}
+		else 
+		{
+			effect->Sattaque2.setScale(0.4*(i-15), 0.4*(i-15));
+			window->draw(effect->Sattaque2);
+		}
+		window->draw(cmbtdeco->comm1);
+		window->draw(cmbtdeco->comm2);
 		
+	}
+	else if (attstr == "volF")
+	{
+		window->draw(cmbtdeco->Sfondcmbt);
+		window->draw(cmbtdeco->textnompkm);
+		window->draw(cmbtdeco->textnompkmsav);
+		window->draw(cmbtdeco->textviepkm);
+		window->draw(cmbtdeco->textviepkmsav);
+		window->draw(cmbtdeco->Sbarrevie);
+		window->draw(cmbtdeco->Sbarreviepkmsav);
+		window->draw(effect->Sattaquefond);
+		window->draw(Spkm);
+		if (i < 5)
+		{
+			window->draw(effect->Sattaque);
+		}
+		else if (i<10)
+		{
+			effect->Sattaque1.move(0, -80 * (i-5));
+			window->draw(effect->Sattaque1);
+		}
+		else if (i<15)
+		{
+			effect->Sattaque1.setOrigin(50, 100);
+			effect->Sattaque1.setPosition(140, -130);
+			effect->Sattaque1.setRotation(180.f);
+			effect->Sattaque1.move(0, 92 * (i-10));
+			window->draw(effect->Sattaque1);
+		}
+		else
+		{
+			effect->Sattaque2.setScale(0.4*(i-15), 0.4*(i-15));
+			window->draw(effect->Sattaque2);
+		}
+		window->draw(cmbtdeco->comm1);
+		window->draw(cmbtdeco->comm2);
+
+	}
+	else if (attstr == "phenixB") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if (i<2.5) { effect->Sattaque.scale(1.f, -1.f); effect->Sattaque.move(0, 250); }
+		else if ((i>5)&&(i<7.5)) { effect->Sattaque.scale(1.f, -1.f); effect->Sattaque.move(0, 250); }
+		else if ((i>10) && (i<12.5)) { effect->Sattaque.scale(1.f, -1.f); effect->Sattaque.move(0, 250); }
+		else if ((i>15) && (i<17.5)) { effect->Sattaque.scale(1.f, -1.f); effect->Sattaque.move(0, 250); }
+		effect->Sattaque.move(100 * i, 0);
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "phenixF") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 0) { effect->Sattaque.scale(1.f, -1.f); }
+		effect->Sattaque.move(-100 * i, 0);
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "spore")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 3 == 0) { effect->Sattaque.setTexture(effect->Tspore1, true); }
+		else if ((int)i % 3 == 1) { effect->Sattaque.setTexture(effect->Tspore2, true); }
+		else { effect->Sattaque.setTexture(effect->Tspore3, true); }
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "mudshot") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 3 == 0) { effect->Sattaque.setTexture(effect->Tmudshot1, true); }
+		else if ((int)i % 3 == 1) { effect->Sattaque.setTexture(effect->Tmudshot2, true); }
+		else { effect->Sattaque.setTexture(effect->Tmudshot3, true); }
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "magicleavesB")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 3 == 0) { effect->Sattaque.setTexture(effect->Tmleave1); }
+		else if ((int)i % 3 == 1) { effect->Sattaque.setTexture(effect->Tmleave2); }
+		else { effect->Sattaque.setTexture(effect->Tmleave3); }
+
+		if ((int)i % 4 == 0) { effect->Sattaque1.setTexture(effect->Tmstar1); }
+		else if ((int)i % 4 == 1) { effect->Sattaque1.setTexture(effect->Tmstar2); }
+		else if ((int)i%4 == 2){ effect->Sattaque1.setTexture(effect->Tmstar3); }
+		else { effect->Sattaque1.setTexture(effect->Tmstar4); }
+
+		for (int j = 0; j < i; j++) 
+		{
+			effect->Sattaque.move(20 *(i-j), -14 * (i -j));
+			window->draw(effect->Sattaque);
+			effect->Sattaque.move(0, 50);
+			window->draw(effect->Sattaque);
+		}
+		if (i > 5)
+		{ 
+			effect->Sattaque1.move(30 * ((int)i % 2), -50 * ((int)i % 2));
+			window->draw(effect->Sattaque1); 
+		}
+		if ((i>10)&&(i<18)){
+			effect->Sattaque1.move(-70, -20);
+			window->draw(effect->Sattaque1);
+		}
 		
+	}
+	else if (attstr == "magicleavesF")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 3 == 0) { effect->Sattaque.setTexture(effect->Tmleave1); }
+		else if ((int)i % 3 == 1) { effect->Sattaque.setTexture(effect->Tmleave2); }
+		else { effect->Sattaque.setTexture(effect->Tmleave3); }
+
+		if ((int)i % 4 == 0) { effect->Sattaque1.setTexture(effect->Tmstar1); }
+		else if ((int)i % 4 == 1) { effect->Sattaque1.setTexture(effect->Tmstar2); }
+		else if ((int)i % 4 == 2) { effect->Sattaque1.setTexture(effect->Tmstar3); }
+		else { effect->Sattaque1.setTexture(effect->Tmstar4); }
+
+		for (int j = 0; j < i; j++)
+		{
+			effect->Sattaque.move(-20 * (i - j), 14 * (i - j));
+			window->draw(effect->Sattaque);
+			effect->Sattaque.move(0, 50);
+			window->draw(effect->Sattaque);
+		}
+		if (i > 5)
+		{
+			effect->Sattaque1.move(30 * ((int)i % 2), -50 * ((int)i % 2));
+			window->draw(effect->Sattaque1);
+		}
+		if ((i>10) && (i<18)) {
+			effect->Sattaque1.move(-70, -20);
+			window->draw(effect->Sattaque1);
+		}
 	}
 	else 
 	{

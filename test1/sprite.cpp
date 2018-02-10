@@ -469,6 +469,9 @@ EffectAtt::EffectAtt()
 	Tcombo_1.loadFromFile(combo1str);
 	Tcombo_2.loadFromFile(combo2str);
 	Tfeu_ball.loadFromFile(feu_ballstr);
+	Tflames.loadFromFile(flamesstr);
+	Tboulefeu1.loadFromFile(boulefeu1str);
+	Tboulefeu2.loadFromFile(boulefeu2str);
 	Tfeu_burn_1.loadFromFile(feu_burn1str);
 	Tfeu_burn_2.loadFromFile(feu_burn2str);
 	Tfeu_explode.loadFromFile(feu_explodestr);
@@ -476,5 +479,23 @@ EffectAtt::EffectAtt()
 	Tpoing.loadFromFile(poingstr);
 	Tredstars.loadFromFile(redstarsstr);
 	Tyellowstars.loadFromFile(yellowstarsstr);
-	Sattaque.setTexture(Tfond_closecombat);
+	Tspike.loadFromFile(spikestr);
+	Tvol1.loadFromFile(vol1str);
+	Tvol2.loadFromFile(vol2str);
+	Tchoc.loadFromFile(chocstr);
+	Tfondvol.loadFromFile(fondvolstr);
+	Tphenix_bleu.loadFromFile(phenix_bleustr);
+	Tspore1.loadFromFile(spore1str);
+	Tspore2.loadFromFile(spore2str);
+	Tspore3.loadFromFile(spore3str);
+	Tmudshot1.loadFromFile(mud1str);
+	Tmudshot2.loadFromFile(mud2str);
+	Tmudshot3.loadFromFile(mud3str);
+	Tmleave1.loadFromFile(mleave1str);
+	Tmleave2.loadFromFile(mleave2str);
+	Tmleave3.loadFromFile(mleave3str);
+	Tmstar1.loadFromFile(mstar1str);
+	Tmstar2.loadFromFile(mstar2str);
+	Tmstar3.loadFromFile(mstar3str);
+	Tmstar4.loadFromFile(mstar4str);
 }
