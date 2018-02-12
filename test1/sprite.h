@@ -441,6 +441,10 @@ public :
 	sf::Texture Tmstar2;
 	sf::Texture Tmstar3;
 	sf::Texture Tmstar4;
+	sf::Texture Trock;
+	sf::Texture Tfissure;
+	sf::Texture Tfallrock;
+	sf::Texture Tlittelrock;
 
 	
 	sf::Sprite Sattaque;
@@ -488,6 +492,12 @@ private:
 	const std::string mstar2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star2.png";
 	const std::string mstar3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star3.png";
 	const std::string mstar4str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/magic_star4.png";
+	//rock
+	const std::string rockstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/rock.png";
+	const std::string fissurestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fissure.png";
+	const std::string fallrockstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fallingrock.png";
+	const std::string littelrockstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/littelrock.png";
+
 public:
 	EffectAtt();
 };

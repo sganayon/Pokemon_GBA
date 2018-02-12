@@ -1581,6 +1581,7 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 			window->draw(effect->Sattaque);
 			effect->Sattaque.move(0, 50);
 			window->draw(effect->Sattaque);
+			effect->Sattaque.move(0, -50);
 		}
 		if (i > 5)
 		{ 
@@ -1611,6 +1612,7 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 			window->draw(effect->Sattaque);
 			effect->Sattaque.move(0, 50);
 			window->draw(effect->Sattaque);
+			effect->Sattaque.move(0, -50);
 		}
 		if (i > 5)
 		{
@@ -1621,6 +1623,64 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 			effect->Sattaque1.move(-70, -20);
 			window->draw(effect->Sattaque1);
 		}
+	}
+	else if (attstr == "rock") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if(i<5)
+		{
+			effect->Sattaque.setPosition(effect->Sattaque.getPosition().x, effect->Sattaque.getPosition().y - 200);
+			effect->Sattaque.move(0, 40 * i);
+			window->draw(effect->Sattaque);
+		}
+		else if (i < 15)
+		{
+			effect->Sattaque1.setScale(0.125*(i-5), 0.125*(i-5));
+			window->draw(effect->Sattaque);
+			window->draw(effect->Sattaque1);
+		}
+		else 
+		{
+			effect->Sattaque2.setPosition(effect->Sattaque.getPosition().x+100-(20*(i-15)), effect->Sattaque.getPosition().y+100 - (20 * (i - 15)));
+			window->draw(effect->Sattaque2);
+			effect->Sattaque2.setPosition(effect->Sattaque.getPosition().x+100 + (20 * (i - 15)), effect->Sattaque.getPosition().y+100 - (20 * (i - 15)));
+			window->draw(effect->Sattaque2);
+			effect->Sattaque2.setPosition(effect->Sattaque.getPosition().x+100 + (20 * (i - 15)), effect->Sattaque.getPosition().y+100 + (20 * (i - 15)));
+			window->draw(effect->Sattaque2);
+			effect->Sattaque2.setPosition(effect->Sattaque.getPosition().x+100 - (20 * (i - 15)), effect->Sattaque.getPosition().y+100 + (20 * (i - 15)));
+			window->draw(effect->Sattaque2);
+		}
+	}
+	else if (attstr == "rockfallB")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((i>5) && (i < 10))
+		{
+			effect->Sattaque.move(0, 40 * (i - 5));
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "rockfallF") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((i>5) && (i < 15))
+		{
+			effect->Sattaque.move(0, 42 * (i - 5));
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "Lrock") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 3 == 2) { window->draw(effect->Sattaque1); }
+		if (i<3){ effect->Sattaque.move(-200 + 100 * i, 0); } //gauche
+		else if (i<6){effect->Sattaque.move(+200 - 100 * (i-3), +200 - 100 * (i-3));} //diag bas droit
+		else if (i<9) { effect->Sattaque.move(+200 - 100 * (i-6), 0); }//droit
+		else if (i<12) { effect->Sattaque.move(0, -200 + 100 * (i - 9)); }//haut
+		else if (i<15){ effect->Sattaque.move(-200 + 100 * (i - 12), +200 - 100 * (i - 12)); } //diag bas gauche
+		else if (i<18) { effect->Sattaque.move(+200 - 100 * (i - 15), -200 + 100 * (i - 15)); }//diag haut droite
+		else if (i<20) { effect->Sattaque.move(-200 + 100 * (i - 18), -200 + 100 * (i - 18)); }//diag haut gauche
+		window->draw(effect->Sattaque);
 	}
 	else 
 	{

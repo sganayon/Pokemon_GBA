@@ -498,4 +498,8 @@ EffectAtt::EffectAtt()
 	Tmstar2.loadFromFile(mstar2str);
 	Tmstar3.loadFromFile(mstar3str);
 	Tmstar4.loadFromFile(mstar4str);
+	Trock.loadFromFile(rockstr);
+	Tfissure.loadFromFile(fissurestr);
+	Tfallrock.loadFromFile(fallrockstr);
+	Tlittelrock.loadFromFile(littelrockstr);
 }

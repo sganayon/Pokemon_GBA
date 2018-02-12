@@ -586,7 +586,25 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			return "spore"; 
 		}
 		else if (type == "Ground") { return " "; }
-		else if (type == "Rock") { return " "; }
+		else if (type == "Rock") 
+		{
+			effect->Sattaque.setTexture(effect->Trock, true);
+			effect->Sattaque1.setTexture(effect->Tfissure, true);
+			effect->Sattaque1.setOrigin(75, 0);
+			effect->Sattaque1.setScale(0.1, 0.1);
+			effect->Sattaque2.setTexture(effect->Tlittelrock, true);
+			if (sens == 'B')
+			{
+				effect->Sattaque.setPosition(460, 5);
+				effect->Sattaque1.setPosition(560, 8);
+			}
+			else
+			{
+				effect->Sattaque.setPosition(80, 220);
+				effect->Sattaque1.setPosition(180, 223);
+			}
+			return "rock";
+		}
 		else if (type == "Bug") { return " "; }
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
@@ -689,7 +707,20 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			return "mudshot"; 
 		}
 		else if (type == "Ground") { return " "; }
-		else if (type == "Rock") { return " "; }
+		else if (type == "Rock") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tfallrock, true);
+			if (sens == 'B') 
+			{
+				effect->Sattaque.setPosition(480, -200);
+				return "rockfallB";
+			}
+			else 
+			{
+				effect->Sattaque.setPosition(75, -200);
+				return "rockfallF";
+			}
+		}
 		else if (type == "Bug") { return " " ; }
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
@@ -787,7 +818,16 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			 
 		}
 		else if (type == "Ground") { return  " "; }
-		else if (type == "Rock") { return " "; }
+		else if (type == "Rock") 
+		{ 
+			effect->Sattaque1.setTexture(effect->Tcharge, true);
+			effect->Sattaque1.setColor(sf::Color::Black);
+			effect->Sattaque1.setOrigin(75, 75);
+			effect->Sattaque.setTexture(effect->Tlittelrock, true);
+			if (sens == 'B'){ effect->Sattaque.setPosition(550, 100); effect->Sattaque1.setPosition(575, 125);}
+			else{ effect->Sattaque.setPosition(150, 320); effect->Sattaque1.setPosition(175, 345);}
+			return "Lrock"; 
+		}
 		else if (type == "Bug") { return " "; }
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
