@@ -27,6 +27,7 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 	bool venteshop = false;
 	bool echange = false;
 	bool cmbtatttrigger = false;
+	bool battel = false;
 
 	char choixmenucmbt1 = 'M'; //selectionne l'affichage du menu de combat
 	char pagemenu = 'I'; //selectionne l'affichage du menu
@@ -40,6 +41,7 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 	int IDpkmequi = 0; //quelle pkm de l'equipe est select pour combattre
 	int IDobjvente = 0; //ID de l'objet selectioner lors d'un achat au shop pkm
 	int IDpokeechan = 0;//id du pokemon a echanger
+	int IDpkmadv = 0; //ID du pokemon de l'adversaire
 
 	sf::Vector2f tscreen(800.f, 592.f);
 	sf::Vector2i ini(10, 10); //position initial du perso sur map general
@@ -87,15 +89,24 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 	initbestiaire(bestiaire);
 	Pokedex* equipe = new Pokedex(6); //equipe de 6pkm max
 	Pokedex* stocagepkm = new Pokedex(10); //stocage ilimiter de pkm
+	Pokedex* equipeadv = new Pokedex(6); //equipe adverse
 	Ressource* mesressource = new Ressource();
 	pokemon pokemonsav = genererPokemon(bestiaire);
 	pokemon pokemoncmbtptr;
 	hashtable* htab = inithashtable();
 	
+	std::vector<Adversaire*> alladv; // contient tt les adversaires
+	Adversaire* advptr = nullptr; //pointeur qui select l'adversaire
+	Adversaire Remis(equipeadv); //pnj agressif
+	Remis.posmap.x = 80; Remis.posmap.y = 30;
+	alladv.push_back(&Remis);
+	map.set(Remis.Sperso, 80, 30);
+
 	inipnj(&marcel, &gerard, &hubert, &trans);
 	inimapgene(&map, eau.Seau, herbe.Sherbe, arbre.Sarbre, falaise.SfalaisebordR, falaise.SbordterreU, falaise.SbordfalaisemerUR, marcel.Sperso, marcel.posmap.x, marcel.posmap.y, centreP, shopP);
 	inimapcntpkm(&mapCntPkm, centreP.SmurCentreP, portesortie.Sportesortie, centreP.SwallRCP, centreP.SwallDCP, centreP.SwallLCP, gerard.Sperso, gerard.posmap.x, gerard.posmap.y, trans.Sperso, trans.posmap.x, trans.posmap.y);
 	inimapshppkm(&mapShpPkm, shopP.SmurshopP, portesortie.Sportesortie, shopP.SwallRSP, shopP.SwallDSP, shopP.SwallLSP, hubert.Sperso, hubert.posmap.x, hubert.posmap.y);
+	iniequiadv(equipeadv, bestiaire);
 
 	while (window.isOpen())
 	{
@@ -223,7 +234,6 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 						{
 							chgmap = colliporte(centreP.SCentrePporte, shopP.SshopPporte, portesortie.Sportesortie, *mapptr, perso, 'U', &IDmap);
 							if (!collisions_elem(herbe.Sherbe, rien.Srien, falaise, *mapptr, perso, 'U')) { perso.posmap.y--; isattackable = true; speech = false; } // si l'on bouge on peut de nouveau se faire attaquer
-
 						}
 						perso.face = 'B';
 					}
@@ -302,11 +312,37 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 			}
 		}
 
+		if ((pokemonsav.getactPV() <= 0) && (battel)) //si le pkm de l'adversaire est mort on le switch
+		{
+			if (IDpkmadv<advptr->getequipe()->getnbpokemon() - 1)
+			{
+				IDpkmadv++;
+				pokemonsav = advptr->getequipe()->getpokemon(IDpkmadv);
+				cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+				cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+				cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
+				cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
+				cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
+				cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
+				cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
+				cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
+				cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+				cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+				pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
+				cmbt = true;
+				cmbtatt = false;
+				cmbtpkm.setIsCmbt(true);
+			}// gere le remplacement auto du pkm mort
+			else { cmbt = false; battel = false;  cmbtpkm.setIsCmbt(false); IDpkmadv = 0; advptr->setdown(true); } // si tt les pkm sont mort flag pnj down
+		}
+
 		if (!cmbt)// si on est pas en cmbt on check qu'il y en a pas un a declencher, tjr faire avant majposchgmap !!!!!
 		{
 			detercmbpkm(mapptr, perso.posmap.x, perso.posmap.y, &isattackable, herbe.Sherbe, &cmbt, chgmap);
-			if (cmbt) { 
-				pokemonsav = genererPokemon(bestiaire);
+			deterbattel(&battel, &alladv, &perso, mapptr, rien, herbe, &advptr);
+			if ((cmbt)||(battel)) { 
+				if (!battel) { pokemonsav = genererPokemon(bestiaire); }
+				else {pokemonsav = advptr->getequipe()->getpokemon(0); cmbt = true;}
 				affnoircmbt2(&window, fnoir.Sfnoir,mapptr,speech,herbe.Sherbe,fond.Sfond,rien.Srien,arbre.Sarbre,perso,pnjptr->text,bulle);
 				//affnoircmbt(&window, fnoir.Sfnoir);
 				pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
@@ -353,9 +389,13 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 				cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
 				cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
 				cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+				cmbt = true;
+				cmbtpkm.setIsCmbt(true);
+				cmbtatt = false;
 			}// gere le remplacement auto du pkm mort
-			else { cmbt = false; cmbtpkm.setIsCmbt(false);  perso.posmap = ini; IDpkmequi = 0; P1IsDead = true; cmbtpkm.setIsPkmEquiDead(true); EquiIsDead = true; } // si tt les pkm sont mort alors reswpan et on flag equipe morte
+			else { cmbt = false; cmbtatt = false;  cmbtpkm.setIsCmbt(false);  perso.posmap = ini; IDpkmequi = 0; P1IsDead = true; cmbtpkm.setIsPkmEquiDead(true); EquiIsDead = true; } // si tt les pkm sont mort alors reswpan et on flag equipe morte
 		} 
+		
 		cmbtdeco.majtextecmbt(inttostring(mesressource->getpokeball()), inttostring(mesressource->getpotion()));//met a jours le nb de popo et poke dans le menu combat
 		if (cmbtatt && !cmbtatttrigger) { cmbtatttrigger = true; clk.restart(); } //restart the clock when an animation begin
 		if(cmbtatt)

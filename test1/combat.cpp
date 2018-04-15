@@ -585,8 +585,8 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			else { effect->Sattaque.setPosition(150, 300); }
 			return "spore"; 
 		}
-		else if (type == "Ground") { return " "; }
-		else if (type == "Rock") 
+		//else if (type == "Ground") { return " "; }
+		else if ((type == "Rock")||(type == "Ground")) 
 		{
 			effect->Sattaque.setTexture(effect->Trock, true);
 			effect->Sattaque1.setTexture(effect->Tfissure, true);
@@ -605,7 +605,22 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			}
 			return "rock";
 		}
-		else if (type == "Bug") { return " "; }
+		else if (type == "Bug") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tbug1, true);
+			effect->Sattaque1.setTexture(effect->Tbug1, true);
+			if (sens == 'B') 
+			{ 
+				effect->Sattaque.setPosition(500, 45);
+				effect->Sattaque1.setPosition(500, 45);
+			}
+			else 
+			{
+				effect->Sattaque.setPosition(100, 245); 
+				effect->Sattaque1.setPosition(100, 245);
+			}
+			return "bug1";
+		}
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
 		else if (type == "Fire") 
@@ -706,8 +721,8 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			}
 			return "mudshot"; 
 		}
-		else if (type == "Ground") { return " "; }
-		else if (type == "Rock") 
+		//else if (type == "Ground") { return " "; }
+		else if ((type == "Rock")||(type == "Ground")) 
 		{ 
 			effect->Sattaque.setTexture(effect->Tfallrock, true);
 			if (sens == 'B') 
@@ -721,7 +736,22 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 				return "rockfallF";
 			}
 		}
-		else if (type == "Bug") { return " " ; }
+		else if (type == "Bug") 
+		{
+			effect->Sattaque.setTexture(effect->Tbug2, true);
+			effect->Sattaque.setOrigin(75, 75);
+			if (sens == 'B')
+			{
+				effect->Sattaque.setPosition(235.f, 295.f);
+				return "bug2B";
+			}
+			else 
+			{
+				effect->Sattaque.setPosition(435.f, 155.f);
+				return "bug2F";
+			}
+			
+		}
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
 		else if (type == "Fire") 
@@ -817,8 +847,8 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			}
 			 
 		}
-		else if (type == "Ground") { return  " "; }
-		else if (type == "Rock") 
+		//else if (type == "Ground") { return  " "; }
+		else if ((type == "Rock")||(type == "Ground")) 
 		{ 
 			effect->Sattaque1.setTexture(effect->Tcharge, true);
 			effect->Sattaque1.setColor(sf::Color::Black);
@@ -828,7 +858,13 @@ std::string majspriteatt(EffectAtt* effect, std::string type, unsigned int dgtat
 			else{ effect->Sattaque.setPosition(150, 320); effect->Sattaque1.setPosition(175, 345);}
 			return "Lrock"; 
 		}
-		else if (type == "Bug") { return " "; }
+		else if (type == "Bug") 
+		{ 
+			effect->Sattaque.setTexture(effect->Tbug3, true);
+			if (sens == 'B') { effect->Sattaque.setPosition(500, 45);}
+			else { effect->Sattaque.setPosition(100, 245); }
+			return "bug3";
+		}
 		else if (type == "Ghost") { return " "; }
 		else if (type == "Steel") { return " "; }
 		else if (type == "Fire") 

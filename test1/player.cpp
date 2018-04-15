@@ -68,3 +68,36 @@ int PNJ::getID(void)
 {
 	return ID;
 }
+
+
+Adversaire::Adversaire(Pokedex* equipeptr = nullptr)
+{
+	Sperso.setColor(sf::Color::Yellow);
+	font.loadFromFile(fontstr);
+	text.setFont(font);
+	text.setString(textestr);
+	text.setCharacterSize(16);
+	text.setFillColor(sf::Color::Black);
+	text.setPosition(40.f, 564.f);
+	equipe = equipeptr;
+}
+
+void Adversaire::setequipe(Pokedex* equipeptr = nullptr)
+{
+	equipe = equipeptr;
+}
+
+Pokedex* Adversaire::getequipe()
+{
+	return equipe;
+}
+
+bool Adversaire::isdown() 
+{
+	return isdown_;
+}
+
+void Adversaire::setdown(bool down)
+{
+	isdown_ = down;
+}

@@ -1682,6 +1682,68 @@ void affcmbtatt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkms
 		else if (i<20) { effect->Sattaque.move(-200 + 100 * (i - 18), -200 + 100 * (i - 18)); }//diag haut gauche
 		window->draw(effect->Sattaque);
 	}
+	else if (attstr == "bug1") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if (i < 5)
+		{
+			effect->Sattaque.setTextureRect(sf::IntRect(0, 0, 20*i, 20*i));
+			window->draw(effect->Sattaque);
+		}
+		else if (i<10) 
+		{
+			effect->Sattaque1.setTextureRect(sf::IntRect(0, 0, 20*(i-5), 20*(i-5)));
+			effect->Sattaque1.setOrigin(50, 50);
+			effect->Sattaque1.move(50, 50);
+			effect->Sattaque1.rotate(90);
+			window->draw(effect->Sattaque1);
+		}
+		else if (i < 15)
+		{
+			effect->Sattaque.setTextureRect(sf::IntRect(0, 0, 20*(i-10), 20 * (i-10)));
+			effect->Sattaque1.setTextureRect(sf::IntRect(0, 0, 20 * (i - 10), 20 * (i - 10)));
+			effect->Sattaque1.setOrigin(50, 50);
+			effect->Sattaque1.move(50, 50);
+			effect->Sattaque1.rotate(90);
+			window->draw(effect->Sattaque);
+			window->draw(effect->Sattaque1);
+		}
+		else
+		{
+			effect->Sattaque1.setOrigin(50, 50);
+			effect->Sattaque1.move(50, 50);
+			effect->Sattaque1.rotate(90);
+			window->draw(effect->Sattaque);
+			window->draw(effect->Sattaque1);
+		}
+	}
+	else if (attstr == "bug2B") 
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((i >= 5) && (i <= 10)) { effect->Sattaque.move(69 * (i - 5), -28 * (i - 5)); }
+		else if (i>10)
+		{ 
+			effect->Sattaque.setPosition(575, 120);
+			effect->Sattaque.setScale(1+0.1*i, 1+0.1*i);
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "bug2F")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((i >= 5) && (i <= 10)) { effect->Sattaque.move(-69 * (i - 5), 28 * (i - 5)); }
+		else if (i>10)
+		{
+			effect->Sattaque.setPosition(175, 320);
+			effect->Sattaque.setScale(1 + 0.1*i, 1 + 0.1*i);
+		}
+		window->draw(effect->Sattaque);
+	}
+	else if (attstr == "bug3")
+	{
+		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
+		if ((int)i % 2 == 0) { window->draw(effect->Sattaque); };
+	}
 	else 
 	{
 		afffondcmbt(window, cmbtdeco, Spkmsav, Spkm);
@@ -1733,4 +1795,58 @@ std::string majeffectatt(Combatdeco* cmbtdeco, float mult, pokemon* pkm, unsigne
 	
 	attstr = majspriteatt(effect, type, dgtatt, sens);
 	return attstr;
+}
+
+void iniequiadv(Pokedex* equipe, especepokemon bestiaire[])
+{
+	for(size_t i = 0; i<6;i++)
+		insertPokemon(&equipe, genererPokemon(bestiaire));
+}
+
+bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite rien, sf::Sprite herbe) 
+{
+	if ((posperso.x == posremis.x) && (posperso.y > posremis.y) && (posperso.y - posremis.y < 50)) //on est a 50 case ou moin en bas du pnj
+	{
+		for (size_t i = posremis.y +1; i < posperso.y -1; i++) 
+		{
+			if ((map->get(posremis.x, i).getTexture() != rien.getTexture()) && (map->get(posremis.x, i).getTexture() != herbe.getTexture())) { return false; }
+		}
+		return true;
+	}
+	else if ((posperso.x == posremis.x) && (posperso.y < posremis.y) && (posremis.y - posperso.y < 50))//on est en haut du pnj
+	{
+		for (size_t i = posperso.y +1; i < posremis.y -1; i++)
+		{
+			if ((map->get(posremis.x, i).getTexture() != rien.getTexture()) && (map->get(posremis.x, i).getTexture() != herbe.getTexture())) { return false; }
+		}
+		return true;
+	}
+	else if ((posperso.y == posremis.y) && (posperso.x < posremis.x) && (posremis.x - posperso.x < 50))//on est en droite
+	{
+		for (size_t i = posperso.y +1; i < posremis.y -1; i++)
+		{
+			if ((map->get(i, posperso.y).getTexture() != rien.getTexture()) && (map->get(i, posperso.y).getTexture() != herbe.getTexture())) { return false; }
+		}
+		return true;
+	}
+	else if ((posperso.y == posremis.y) && (posperso.x > posremis.x) && (posperso.x - posremis.x < 50))// on est en gauche
+	{
+		for (size_t i = posremis.y +1; i < posperso.y -1; i++)
+		{
+			if ((map->get(i, posperso.y).getTexture() != rien.getTexture()) && (map->get(i, posperso.y).getTexture() != herbe.getTexture())) { return false; }
+		}
+		return true;
+	}
+	else 
+		return false;
+}
+
+void deterbattel(bool* battel, std::vector<Adversaire*>* alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr) 
+{
+	bool isadv = false;
+	for (std::vector<Adversaire*>::iterator it = alladv->begin(); it != alladv->end(); it++)
+	{
+		isadv = isbattel(perso->posmap, (*it)->posmap, mapptr, rien.Srien, herbe.Sherbe); //verifie que l'on est pas a porter d'un pnj agressif
+		if ((isadv) && (!((*it)->isdown()))) { *advptr = (*it); *battel = true; break; }
+	}
 }

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include<iostream>
 #include<string.h>
+#include "pokedex.h"
 
 class Perso 
 {
@@ -40,3 +41,22 @@ public :
 	void setID(int i);
 	int getID(void);
 };
+
+class Adversaire : public Perso //un adversaire a une equipe  
+{
+public:
+	sf::Font font;
+	sf::Text text;
+private:
+	const std::string fontstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/arial.ttf";
+	std::string textestr = "Vien te battre !!!";
+	Pokedex* equipe;
+	bool isdown_;
+public:
+	Adversaire(Pokedex* equipeptr);
+	void setequipe(Pokedex* equipeptr);
+	Pokedex* getequipe();
+	bool isdown();
+	void setdown(bool down);
+};
+

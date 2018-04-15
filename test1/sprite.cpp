@@ -502,4 +502,8 @@ EffectAtt::EffectAtt()
 	Tfissure.loadFromFile(fissurestr);
 	Tfallrock.loadFromFile(fallrockstr);
 	Tlittelrock.loadFromFile(littelrockstr);
+	Tbug1.loadFromFile(bug1str);
+	Tbug2.loadFromFile(bug2str);
+	Tbug3.loadFromFile(bug3str);
+	Tbug3_2.loadFromFile(bug3_2str);
 }

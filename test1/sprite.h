@@ -315,6 +315,9 @@ public :
 	sf::Sprite Sbarreviepkmsav;
 	sf::Sprite Sbarrevie;
 
+	sf::Texture Tpokeball;
+	sf::Sprite Spokemball; // indique cb de pkm il reste a l'adv
+
 	sf::Font font;
 
 	sf::Text textatt;		//choix attaqe du 1er menus --> 4 attaques 
@@ -445,6 +448,10 @@ public :
 	sf::Texture Tfissure;
 	sf::Texture Tfallrock;
 	sf::Texture Tlittelrock;
+	sf::Texture Tbug1;
+	sf::Texture Tbug2;
+	sf::Texture Tbug3;
+	sf::Texture Tbug3_2;
 
 	
 	sf::Sprite Sattaque;
@@ -497,6 +504,11 @@ private:
 	const std::string fissurestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fissure.png";
 	const std::string fallrockstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fallingrock.png";
 	const std::string littelrockstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/littelrock.png";
+	//bug
+	const std::string bug1str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/bug1.png";
+	const std::string bug2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/bug2.png";
+	const std::string bug3str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/bug3.png";
+	const std::string bug3_2str = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/bug3_2.png";
 
 public:
 	EffectAtt();

@@ -89,3 +89,8 @@ void afffondcmbt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkm
 
 std::string majeffectatt(Combatdeco* cmbtdeco, float mult, pokemon* pkm, unsigned int dgtatt, float dommage, EffectAtt* effect, std::string type, char sens);
 
+void iniequiadv(Pokedex* equipe, especepokemon bestiaire[]);
+
+bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite rien, sf::Sprite herbe);
+
+void deterbattel(bool* battel, std::vector<Adversaire*>* alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr);

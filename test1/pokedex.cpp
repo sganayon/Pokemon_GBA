@@ -97,8 +97,8 @@ pokemon genererPokemon(especepokemon bestiaire[150])
 	{
 		i = (random_at_most(10000) % 150);
 	}
-	//pokemon pokesauvage(bestiaire[i].nom);
-	pokemon pokesauvage("Onix");
+	pokemon pokesauvage(bestiaire[i].nom);
+	//pokemon pokesauvage("Paras");
 	pokesauvage.majsprite(bestiaire[i].cheminback, bestiaire[i].cheminface);
 	return pokesauvage;
 }
