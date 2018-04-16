@@ -53,11 +53,11 @@ void affcmbt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkmsav,
 
 void majmenucmbt(int IDligne, int IDcolone, char choixmenu, Combatdeco* combatdeco);
 
-void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bool* menu, std::string cheminsave, sf::Vector2i persoposmap, sf::Vector2i posmapbefore, int IDmap, char* pagemenu, int* rangpkmaff, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, bool* echange, especepokemon bestiaire[], int* IDpkmequipe, pokemon* pokemonptr, int IDpkmcmbt);
+void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bool* menu, std::string cheminsave, sf::Vector2i persoposmap, sf::Vector2i posmapbefore, int IDmap, char* pagemenu, int* rangpkmaff, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, bool* echange, especepokemon bestiaire[], int* IDpkmequipe, pokemon* pokemonptr, int IDpkmcmbt, std::vector<Adversaire*>& alladv);
 
-void gestionmenuini(sf::Event event, int * IDlignemenuini, char* pagemenu, std::string cheminsave, sf::Vector2i* persoposmap, sf::Vector2i* posmapbefore, int* IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, char* labeltype[], especepokemon bestiraire[], Perso* perso, pokemon* pkmcmbt, bool* isinmenu);
+void gestionmenuini(sf::Event event, int * IDlignemenuini, char* pagemenu, std::string cheminsave, sf::Vector2i* persoposmap, sf::Vector2i* posmapbefore, int* IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, char* labeltype[], especepokemon bestiraire[], Perso* perso, pokemon* pkmcmbt, bool* isinmenu, std::vector<Adversaire*>& alladv);
 
-void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenucmbt, char* choixmenucmbt, bool* cmbt, pokemon* pokemonptr, pokemon* pokemonsav, hashtable* htab, especepokemon bestiaire[], bool* IsP1Dead, Ressource* mesressource, Pokedex** stocage, sf::RenderWindow* window, Combatdeco cmbtdeco, EffectAtt* effect, bool* cmbtatt, CombatPokemon* cmbtpkm);
+void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenucmbt, char* choixmenucmbt, bool* cmbt, pokemon* pokemonptr, pokemon* pokemonsav, hashtable* htab, especepokemon bestiaire[], bool* IsP1Dead, Ressource* mesressource, Pokedex** stocage, sf::RenderWindow* window, Combatdeco cmbtdeco, EffectAtt* effect, bool* cmbtatt, CombatPokemon* cmbtpkm, bool& battel);
 
 void gestionspeech(int IDmap, Perso* perso, PNJ** pnjptr, PNJ* marcel, PNJ* gerard, PNJ* hubert, PNJ* trans, bool* speech, bool* venteshop, int tune);
 
@@ -93,4 +93,12 @@ void iniequiadv(Pokedex* equipe, especepokemon bestiaire[]);
 
 bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite rien, sf::Sprite herbe);
 
-void deterbattel(bool* battel, std::vector<Adversaire*>* alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr);
+void deterbattel(bool* battel, std::vector<Adversaire*>& alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr);
+
+void majTextAnnimation(std::string& attstr, bool& P1IsDead, bool& cmbtatttrigger, bool& cmbt, bool& cmbtatt, const sf::Clock& clk, CombatPokemon& cmbtpkm, Combatdeco& cmbtdeco, pokemon& pokemoncmbtptr, pokemon& pokemonsav, EffectAtt& effect);
+
+void switchPkmAdv(bool& battel, bool& cmbt, bool& cmbtatt, int& IDpkmadv, Adversaire* advptr, pokemon& pokemonsav, pokemon& pokemoncmbtptr, Combatdeco& cmbtdeco, especepokemon bestiaire[], CombatPokemon& cmbtpkm);
+
+void switchPkmEqui(bool& EquiIsDead, bool& P1IsDead, bool& battel, bool& cmbt, bool& cmbtatt, int& IDpkmequi, Pokedex* equipe, pokemon& pokemonsav, pokemon& pokemoncmbtptr, Combatdeco& cmbtdeco, especepokemon bestiaire[], CombatPokemon& cmbtpkm, Perso& perso, sf::Vector2i& ini);
+
+void launchCmbtBattel(sf::RenderWindow* window, bool& speech, bool& EquiIsDead, bool& battel, bool& isattackable, bool& cmbt, bool& chgmap, Map* mapptr, Perso& perso, Herbe& herbe, Rien& rien, Arbre& arbre, Fond& fond, Fnoir& fnoir, Bull& bulle, PNJ* pnjptr, std::vector<Adversaire*>& alladv, Adversaire** advptr, pokemon& pokemonsav, pokemon& pokemoncmbtptr, especepokemon bestiaire[], Combatdeco& cmbtdeco, CombatPokemon& cmbtpkm, sf::Vector2i& ini);

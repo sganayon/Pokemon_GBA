@@ -469,15 +469,16 @@ void majmenuini(int IDlignemenuini, Menudeco* menudeco)
 
 void affcmbt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkmsav, sf::Sprite Spkm, char choix1)
 {
-	(*window).draw((*cmbtdeco).Sfondcmbt);
-	(*window).draw((*cmbtdeco).textnompkm);
-	(*window).draw((*cmbtdeco).textnompkmsav);
-	(*window).draw((*cmbtdeco).textviepkm);
-	(*window).draw((*cmbtdeco).textviepkmsav);
-	(*window).draw((*cmbtdeco).Sbarrevie);
-	(*window).draw((*cmbtdeco).Sbarreviepkmsav);
-	(*window).draw(Spkmsav);
-	(*window).draw(Spkm);
+	window->draw(cmbtdeco->Sfondcmbt);
+	window->draw(cmbtdeco->textnompkm);
+	window->draw(cmbtdeco->textnompkmsav);
+	window->draw(cmbtdeco->textviepkm);
+	window->draw(cmbtdeco->textviepkmsav);
+	window->draw(cmbtdeco->Sbarrevie);
+	window->draw(cmbtdeco->Sbarreviepkmsav);
+	window->draw(Spkmsav);
+	window->draw(Spkm);
+	window->draw(cmbtdeco->Spokeball);
 	switch (choix1)
 	{
 	case 'A' :	//on a choisi attaque
@@ -571,7 +572,7 @@ void majmenucmbt(int IDligne, int IDcolone, char choixmenu, Combatdeco* combatde
 	}
 }
 
-void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bool* menu, std::string cheminsave, sf::Vector2i persoposmap, sf::Vector2i posmapbefore, int IDmap, char* pagemenu, int* rangpkmaff, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, bool* echange, especepokemon bestiaire[], int* IDpkmequipe, pokemon* pokemonptr, int IDpkmcmbt)
+void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bool* menu, std::string cheminsave, sf::Vector2i persoposmap, sf::Vector2i posmapbefore, int IDmap, char* pagemenu, int* rangpkmaff, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, bool* echange, especepokemon bestiaire[], int* IDpkmequipe, pokemon* pokemonptr, int IDpkmcmbt, std::vector<Adversaire*>& alladv)
 {
 	pokemon tmp; 
 
@@ -605,7 +606,7 @@ void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bo
 
 			case 3: //Sauvegarder/Quitter
 
-				sauvegarder(cheminsave, persoposmap, posmapbefore, IDmap, stocage, equipe, mesressource);
+				sauvegarder(cheminsave, persoposmap, posmapbefore, IDmap, stocage, equipe, mesressource, alladv);
 				(*window).close();
 				break;
 			default:
@@ -697,7 +698,7 @@ void gestionmenu(sf::Event event, sf::RenderWindow* window, int* IDlignemenu, bo
 	}
 }
 
-void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenucmbt, char* choixmenucmbt, bool* cmbt, pokemon* pokemonptr, pokemon* pokemonsav, hashtable* htab, especepokemon bestiaire[], bool* IsP1Dead, Ressource* mesressource, Pokedex** stocage, sf::RenderWindow* window, Combatdeco cmbtdeco, EffectAtt* effect, bool* cmbtatt, CombatPokemon* cmbtpkm)
+void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenucmbt, char* choixmenucmbt, bool* cmbt, pokemon* pokemonptr, pokemon* pokemonsav, hashtable* htab, especepokemon bestiaire[], bool* IsP1Dead, Ressource* mesressource, Pokedex** stocage, sf::RenderWindow* window, Combatdeco cmbtdeco, EffectAtt* effect, bool* cmbtatt, CombatPokemon* cmbtpkm, bool& battel)
 {
 
 	if (event.key.code == sf::Keyboard::Up)
@@ -728,7 +729,7 @@ void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenuc
 			}
 			else
 			{
-				if ((*IDcolonemenucmbt) == 0) { (*cmbt) = false; std::cout << "vous fuyer lachement" << std::endl; }// on a choisi la fuite 
+				if ((*IDcolonemenucmbt) == 0) { (*cmbt) = false; battel = false;}// on a choisi la fuite 
 				else { (*choixmenucmbt) = 'P'; } // on a choisi pokemon chg le menu
 			}
 			break;
@@ -795,7 +796,7 @@ void gestionmenucombat(sf::Event event, int* IDlignemenucmbt, int* IDcolonemenuc
 	}
 }
 
-void gestionmenuini(sf::Event event, int * IDlignemenuini, char* pagemenu, std::string cheminsave, sf::Vector2i* persoposmap, sf::Vector2i* posmapbefore, int* IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, char* labeltype[], especepokemon bestiraire[], Perso* perso, pokemon* pkmcmbt, bool* isinmenu)
+void gestionmenuini(sf::Event event, int * IDlignemenuini, char* pagemenu, std::string cheminsave, sf::Vector2i* persoposmap, sf::Vector2i* posmapbefore, int* IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, char* labeltype[], especepokemon bestiraire[], Perso* perso, pokemon* pkmcmbt, bool* isinmenu, std::vector<Adversaire*>& alladv)
 {
 	if (event.key.code == sf::Keyboard::Up) //permet de selec la ligne
 	{
@@ -829,7 +830,7 @@ void gestionmenuini(sf::Event event, int * IDlignemenuini, char* pagemenu, std::
 
 		case 1: //continuer
 			(*pagemenu) = 'M';
-			charger(cheminsave, persoposmap, posmapbefore, IDmap, &stocage, &equipe, mesressource);
+			charger(cheminsave, persoposmap, posmapbefore, IDmap, &stocage, &equipe, mesressource, alladv);
 			(*perso).posmap.x = (*persoposmap).x;
 			(*perso).posmap.y = (*persoposmap).y;
 			(*pkmcmbt) = (*equipe).getpokemon(0);
@@ -1763,6 +1764,7 @@ void afffondcmbt(sf::RenderWindow* window, Combatdeco* cmbtdeco, sf::Sprite Spkm
 	window->draw(Spkm);
 	window->draw(cmbtdeco->comm1);
 	window->draw(cmbtdeco->comm2);
+	window->draw(cmbtdeco->Spokeball);
 }
 
 std::string majeffectatt(Combatdeco* cmbtdeco, float mult, pokemon* pkm, unsigned int dgtatt, float dommage, EffectAtt* effect, std::string type, char sens)
@@ -1800,14 +1802,14 @@ std::string majeffectatt(Combatdeco* cmbtdeco, float mult, pokemon* pkm, unsigne
 void iniequiadv(Pokedex* equipe, especepokemon bestiaire[])
 {
 	for(size_t i = 0; i<6;i++)
-		insertPokemon(&equipe, genererPokemon(bestiaire));
+		insertPokemon(&equipe, genererPokemonadv(bestiaire));
 }
 
 bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite rien, sf::Sprite herbe) 
 {
 	if ((posperso.x == posremis.x) && (posperso.y > posremis.y) && (posperso.y - posremis.y < 50)) //on est a 50 case ou moin en bas du pnj
 	{
-		for (size_t i = posremis.y +1; i < posperso.y -1; i++) 
+		for (size_t i = posremis.y +1; i < posperso.y; i++) 
 		{
 			if ((map->get(posremis.x, i).getTexture() != rien.getTexture()) && (map->get(posremis.x, i).getTexture() != herbe.getTexture())) { return false; }
 		}
@@ -1815,7 +1817,7 @@ bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite
 	}
 	else if ((posperso.x == posremis.x) && (posperso.y < posremis.y) && (posremis.y - posperso.y < 50))//on est en haut du pnj
 	{
-		for (size_t i = posperso.y +1; i < posremis.y -1; i++)
+		for (size_t i = posperso.y +1; i < posremis.y; i++)
 		{
 			if ((map->get(posremis.x, i).getTexture() != rien.getTexture()) && (map->get(posremis.x, i).getTexture() != herbe.getTexture())) { return false; }
 		}
@@ -1823,7 +1825,7 @@ bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite
 	}
 	else if ((posperso.y == posremis.y) && (posperso.x < posremis.x) && (posremis.x - posperso.x < 50))//on est en droite
 	{
-		for (size_t i = posperso.y +1; i < posremis.y -1; i++)
+		for (size_t i = posperso.x + 1; i < posremis.x; i++)
 		{
 			if ((map->get(i, posperso.y).getTexture() != rien.getTexture()) && (map->get(i, posperso.y).getTexture() != herbe.getTexture())) { return false; }
 		}
@@ -1831,7 +1833,7 @@ bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite
 	}
 	else if ((posperso.y == posremis.y) && (posperso.x > posremis.x) && (posperso.x - posremis.x < 50))// on est en gauche
 	{
-		for (size_t i = posremis.y +1; i < posperso.y -1; i++)
+		for (size_t i = posremis.x +1; i < posperso.x; i++)
 		{
 			if ((map->get(i, posperso.y).getTexture() != rien.getTexture()) && (map->get(i, posperso.y).getTexture() != herbe.getTexture())) { return false; }
 		}
@@ -1841,12 +1843,143 @@ bool isbattel(sf::Vector2i posperso, sf::Vector2i posremis, Map* map, sf::Sprite
 		return false;
 }
 
-void deterbattel(bool* battel, std::vector<Adversaire*>* alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr) 
+void deterbattel(bool* battel, std::vector<Adversaire*>& alladv, Perso* perso, Map* mapptr, Rien rien, Herbe herbe, Adversaire** advptr) 
 {
 	bool isadv = false;
-	for (std::vector<Adversaire*>::iterator it = alladv->begin(); it != alladv->end(); it++)
+	for (std::vector<Adversaire*>::iterator it = alladv.begin(); it != alladv.end(); it++)
 	{
 		isadv = isbattel(perso->posmap, (*it)->posmap, mapptr, rien.Srien, herbe.Sherbe); //verifie que l'on est pas a porter d'un pnj agressif
 		if ((isadv) && (!((*it)->isdown()))) { *advptr = (*it); *battel = true; break; }
+	}
+}
+
+void majTextAnnimation(std::string& attstr, bool& P1IsDead, bool& cmbtatttrigger, bool& cmbt, bool& cmbtatt, const sf::Clock& clk, CombatPokemon& cmbtpkm, Combatdeco& cmbtdeco, pokemon& pokemoncmbtptr, pokemon& pokemonsav, EffectAtt& effect)
+{
+	sf::Time time = clk.getElapsedTime();
+	if (cmbtpkm.getpkmequifirst())
+	{
+		if ((cmbtpkm.getdgtattpkmequi() == 0) && (time.asSeconds() < 2)) //soin 
+		{
+			cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV() + cmbtpkm.getdgtpkmsauv()) / (float)(pokemoncmbtptr.getPV()), 'E'); //on montre dabord la vie avant les degats du pkm sauvage
+			cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV() + cmbtpkm.getdgtpkmsauv()));
+		}
+		if (time.asSeconds() < 2) { attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmequi(), &pokemoncmbtptr, cmbtpkm.getdgtattpkmequi(), cmbtpkm.getdgtpkmequi(), &effect, cmbtpkm.gettypeequi(), 'B'); }
+		else if (time.asSeconds() < 4)
+		{
+			cmbt = cmbtpkm.getIsCmbt();
+			if (!cmbt) {
+				cmbtatt = false;
+				cmbtatttrigger = false;
+			}
+			cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+			cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+			attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmsauv(), &pokemonsav, cmbtpkm.getdgtattpkmsauv(), cmbtpkm.getdgtpkmsauv(), &effect, cmbtpkm.gettypesauv(), 'F');
+		}
+		else
+		{
+			cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+			cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+			cmbtatt = false;
+			cmbtatttrigger = false;
+			P1IsDead = cmbtpkm.getIsPkmEquiDead();
+		}
+	}
+	else
+	{
+		if (time.asSeconds() < 2) { attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmsauv(), &pokemonsav, cmbtpkm.getdgtattpkmsauv(), cmbtpkm.getdgtpkmsauv(), &effect, cmbtpkm.gettypesauv(), 'F'); }
+		else if (time.asSeconds() < 4)
+		{
+			P1IsDead = cmbtpkm.getIsPkmEquiDead();
+			if (P1IsDead) {
+				cmbtatt = false;
+				cmbtatttrigger = false;
+			}
+			cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+			cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+			attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmequi(), &pokemoncmbtptr, cmbtpkm.getdgtattpkmequi(), cmbtpkm.getdgtpkmequi(), &effect, cmbtpkm.gettypeequi(), 'B');
+		}
+		else
+		{
+			cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+			cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+			cmbtatt = false;
+			cmbtatttrigger = false;
+			cmbt = cmbtpkm.getIsCmbt();
+
+		}
+	}
+}
+
+void switchPkmAdv(bool& battel, bool& cmbt, bool& cmbtatt, int& IDpkmadv, Adversaire* advptr, pokemon& pokemonsav, pokemon& pokemoncmbtptr, Combatdeco& cmbtdeco, especepokemon bestiaire[], CombatPokemon& cmbtpkm)
+{
+	if (IDpkmadv<advptr->getequipe()->getnbpokemon() - 1)
+	{
+		IDpkmadv++;
+		pokemonsav = advptr->getequipe()->getpokemon(IDpkmadv);
+		cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+		cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+		cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
+		cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
+		cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
+		cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
+		cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
+		cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
+		cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+		cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+		cmbtdeco.Spokeball.setTextureRect(sf::IntRect(0, 0, 25 * (advptr->getequipe()->getnbpokemon() - IDpkmadv), 25));
+		pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
+		cmbt = true;
+		cmbtatt = false;
+		cmbtpkm.setIsCmbt(true);
+	}// gere le remplacement auto du pkm mort
+	else { cmbt = false; battel = false;  cmbtpkm.setIsCmbt(false); IDpkmadv = 0; advptr->setdown(true); } // si tt les pkm sont mort flag pnj down
+}
+
+void switchPkmEqui(bool& EquiIsDead, bool& P1IsDead, bool& battel, bool& cmbt, bool& cmbtatt, int& IDpkmequi, Pokedex* equipe, pokemon& pokemonsav, pokemon& pokemoncmbtptr, Combatdeco& cmbtdeco, especepokemon bestiaire[], CombatPokemon& cmbtpkm, Perso& perso, sf::Vector2i& ini)
+{
+	if (IDpkmequi<equipe->getnbpokemon() - 1)
+	{
+		IDpkmequi++;
+		pokemoncmbtptr = equipe->getpokemon(IDpkmequi);
+		P1IsDead = false;
+		cmbtpkm.setIsPkmEquiDead(false);
+		cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+		cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+		cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
+		cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
+		cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
+		cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
+		cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
+		cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
+		cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+		cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+		cmbt = true;
+		cmbtpkm.setIsCmbt(true);
+		cmbtatt = false;
+	}// gere le remplacement auto du pkm mort
+	else { cmbt = false; cmbtatt = false; battel = false; cmbtpkm.setIsCmbt(false);  perso.posmap = ini; IDpkmequi = 0; P1IsDead = true; cmbtpkm.setIsPkmEquiDead(true); EquiIsDead = true;} // si tt les pkm sont mort alors reswpan et on flag equipe morte
+}
+
+void launchCmbtBattel(sf::RenderWindow* window, bool& speech, bool& EquiIsDead, bool& battel, bool& isattackable, bool& cmbt, bool& chgmap, Map* mapptr, Perso& perso, Herbe& herbe, Rien& rien, Arbre& arbre, Fond& fond, Fnoir& fnoir, Bull& bulle, PNJ* pnjptr, std::vector<Adversaire*>& alladv, Adversaire** advptr, pokemon& pokemonsav, pokemon& pokemoncmbtptr, especepokemon bestiaire[], Combatdeco& cmbtdeco, CombatPokemon& cmbtpkm, sf::Vector2i& ini)
+{
+	detercmbpkm(mapptr, perso.posmap.x, perso.posmap.y, &isattackable, herbe.Sherbe, &cmbt, chgmap);
+	deterbattel(&battel, alladv, &perso, mapptr, rien, herbe, advptr);
+	if ((cmbt) || (battel)) {
+		if (!battel) { pokemonsav = genererPokemon(bestiaire); }
+		else { pokemonsav = (*advptr)->getequipe()->getpokemon(0); cmbt = true; cmbtdeco.Spokeball.setTextureRect(sf::IntRect(0, 0, 25 * (*advptr)->getequipe()->getnbpokemon(), 25)); }
+		affnoircmbt2(window, fnoir.Sfnoir, mapptr, speech, herbe.Sherbe, fond.Sfond, rien.Srien, arbre.Sarbre, perso, pnjptr->text, bulle);
+		pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
+		cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
+		cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
+		cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
+		cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
+		cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
+		cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
+		cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
+		cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
+		cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
+		cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
+		cmbtpkm.setIsCmbt(true);
+		if (EquiIsDead) { cmbt = false; cmbtpkm.setIsCmbt(false); perso.posmap = ini; } // si declenche un cmbt alors que pkm tous mort on respawn
 	}
 }

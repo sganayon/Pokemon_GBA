@@ -37,6 +37,7 @@ public :
 
 void insertPokemon(Pokedex** monpokedex, pokemon p);
 pokemon genererPokemon(especepokemon bestiaire[150]);
+pokemon genererPokemonadv(especepokemon bestiaire[150]);
 void supPokemon(Pokedex** monpokedex, int num, especepokemon bestiaire[]);
 void insertPokemon2(Pokedex** monpokedex, pokemon p, int place);
 

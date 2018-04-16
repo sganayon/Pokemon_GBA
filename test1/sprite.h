@@ -316,7 +316,7 @@ public :
 	sf::Sprite Sbarrevie;
 
 	sf::Texture Tpokeball;
-	sf::Sprite Spokemball; // indique cb de pkm il reste a l'adv
+	sf::Sprite Spokeball; // indique cb de pkm il reste a l'adv
 
 	sf::Font font;
 
@@ -342,6 +342,7 @@ private :
 	const std::string fontstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/arial.ttf";
 	const std::string barreviestr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/barrevie.png";
 	const std::string ftextecmbtstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/fonttextecmbt.png";
+	const std::string pokeballstr = "C:/Users/axel/Desktop/telecom/Info/sfml/testpoke/img/pokeballadv.png";
 
 	std::string texteattstr = "Attaque";
 	std::string texteobjstr = "Objet";

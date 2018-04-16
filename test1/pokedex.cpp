@@ -103,6 +103,14 @@ pokemon genererPokemon(especepokemon bestiaire[150])
 	return pokesauvage;
 }
 
+pokemon genererPokemonadv(especepokemon bestiaire[150])
+{
+	int i = (random_at_most(10000) % 150);
+	pokemon pokesauvage(bestiaire[i].nom);
+	pokesauvage.majsprite(bestiaire[i].cheminback, bestiaire[i].cheminface);
+	return pokesauvage;
+}
+
 void insertPokemon2(Pokedex** monpokedex, pokemon p, int place)
 {
 	(*monpokedex)->setpokemon(p, place); // insertion pokemon;

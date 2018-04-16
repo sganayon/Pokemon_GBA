@@ -7,9 +7,9 @@
 #include <fstream>
 #include<stdlib.h>
 #include <stdio.h>
-#include "pokedex.h"
 
-void sauvegarder(std::string chemin, sf::Vector2i position, sf::Vector2i posmapbefore, int IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource)
+
+void sauvegarder(std::string chemin, sf::Vector2i position, sf::Vector2i posmapbefore, int IDmap, Pokedex* stocage, Pokedex* equipe, Ressource* mesressource, std::vector<Adversaire*>& alladv)
 {
 	unsigned int codehash = 0;
 	unsigned int codetmp = 0;
@@ -76,6 +76,9 @@ void sauvegarder(std::string chemin, sf::Vector2i position, sf::Vector2i posmapb
 		codehash = (codesto* stocage->getnbpokemon() + codeequi *equipe->getnbpokemon() + codetmp)%666666666;
 		wrsave1 << codehash<<std::endl;
 		
+		for (std::vector<Adversaire*>::const_iterator it = alladv.begin(); it != alladv.end(); it++) 
+			wrsave1 << (*it)->isdown()<<std::endl;
+
 		wrsave1 << "END";
 		wrsave1.close();  // on referme le fichier
 	}
@@ -84,7 +87,7 @@ void sauvegarder(std::string chemin, sf::Vector2i position, sf::Vector2i posmapb
 }
 
 
-void charger(std::string chemin, sf::Vector2i* position, sf::Vector2i* posmapbefore, int* IDmap, Pokedex** stocage, Pokedex** equipe, Ressource* mesressource)
+void charger(std::string chemin, sf::Vector2i* position, sf::Vector2i* posmapbefore, int* IDmap, Pokedex** stocage, Pokedex** equipe, Ressource* mesressource, std::vector<Adversaire*>& alladv)
 {
 	int nbpkmsto = 0;
 	int nbpkmequ = 0;
@@ -98,6 +101,7 @@ void charger(std::string chemin, sf::Vector2i* position, sf::Vector2i* posmapbef
 	unsigned int codehash = 0;
 	unsigned int codetmp = 0;
 	unsigned int reelcodehas = 0;
+	bool isdown = false;
 
 	std::ifstream fichier(chemin.c_str(), std::ios::in);  // on ouvre le fichier en lecture le .c_str permet de convertire en cst char
 
@@ -205,6 +209,12 @@ void charger(std::string chemin, sf::Vector2i* position, sf::Vector2i* posmapbef
 			codetmp = ((*position).x * (*position).y * (*posmapbefore).x * (*posmapbefore).y + (*IDmap) * mesressource->getpotion() * mesressource->getpokeball() * mesressource->gettune())%999999999;
 			reelcodehas = (codesto * (*stocage)->getnbpokemon() + codeequi * (*equipe)->getnbpokemon() + codetmp) % 666666666;
 
+			for (std::vector<Adversaire*>::iterator it = alladv.begin(); it != alladv.end(); it++)
+			{
+				fichier >> isdown;
+				(*it)->setdown(isdown);
+			}
+			
 			fichier >> L1;// a mettre en fin de boucle d'insersion attention L1 prend une valeur qui est potentiellement un nom que l'on veut garder
 		}
 		fichier.close();  // on ferme le fichier

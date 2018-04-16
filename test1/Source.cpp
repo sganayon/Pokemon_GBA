@@ -101,6 +101,8 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 	Remis.posmap.x = 80; Remis.posmap.y = 30;
 	alladv.push_back(&Remis);
 	map.set(Remis.Sperso, 80, 30);
+	map.set(arbre.Sarbre, 79, 30);
+	map.set(herbe.Sherbe, 80, 29);
 
 	inipnj(&marcel, &gerard, &hubert, &trans);
 	inimapgene(&map, eau.Seau, herbe.Sherbe, arbre.Sarbre, falaise.SfalaisebordR, falaise.SbordterreU, falaise.SbordfalaisemerUR, marcel.Sperso, marcel.posmap.x, marcel.posmap.y, centreP, shopP);
@@ -127,16 +129,16 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 				{
 					if (pagemenu != 'I') //si on n'est pas en phase de demarrage
 					{
-						gestionmenu(event, &window, &IDlignemenu, &menu, cheminsave, perso.posmap, posmapbefore, IDmap, &pagemenu, &rangpkmaff, stocagepkm, equipe, mesressource, &echange,bestiaire, &IDpokeechan, &pokemoncmbtptr, IDpkmequi);
+						gestionmenu(event, &window, &IDlignemenu, &menu, cheminsave, perso.posmap, posmapbefore, IDmap, &pagemenu, &rangpkmaff, stocagepkm, equipe, mesressource, &echange,bestiaire, &IDpokeechan, &pokemoncmbtptr, IDpkmequi, alladv);
 					}
 					else 
 					{ 
-						gestionmenuini(event, &IDlignemenuini,&pagemenu,cheminsave,&perso.posmap,&posmapbefore,&IDmap, stocagepkm,equipe,mesressource,labeltype,bestiaire,&perso, &pokemoncmbtptr, &menu); 
+						gestionmenuini(event, &IDlignemenuini,&pagemenu,cheminsave,&perso.posmap,&posmapbefore,&IDmap, stocagepkm,equipe,mesressource,labeltype,bestiaire,&perso, &pokemoncmbtptr, &menu, alladv);
 					}
 				}
 				else if (cmbt) //on est en combat on neutralise le deplacement
 				{
-					gestionmenucombat(event, &IDlignemenucmbt, &IDcolonemenucmbt, &choixmenucmbt1, &cmbt, &pokemoncmbtptr, &pokemonsav, htab,bestiaire, &P1IsDead,mesressource, &stocagepkm, &window,cmbtdeco,&effect, &cmbtatt, &cmbtpkm);
+					gestionmenucombat(event, &IDlignemenucmbt, &IDcolonemenucmbt, &choixmenucmbt1, &cmbt, &pokemoncmbtptr, &pokemonsav, htab,bestiaire, &P1IsDead,mesressource, &stocagepkm, &window,cmbtdeco,&effect, &cmbtatt, &cmbtpkm, battel);
 				}
 				else if (venteshop) //neutralise les deplacement pendant la vente
 				{
@@ -304,7 +306,7 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 
 			case sf::Event::MouseButtonPressed:
 				if (event.mouseButton.button == sf::Mouse::Right) { std::cout << "x : " << perso.posmap.x << std::endl << "y : " << perso.posmap.y << std::endl; }
-				if (event.mouseButton.button == sf::Mouse::Left) {}
+				if (event.mouseButton.button == sf::Mouse::Left) { perso.posmap.x = 78; perso.posmap.y = 29; }
 				break;
 
 			default:
@@ -312,57 +314,11 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 			}
 		}
 
-		if ((pokemonsav.getactPV() <= 0) && (battel)) //si le pkm de l'adversaire est mort on le switch
-		{
-			if (IDpkmadv<advptr->getequipe()->getnbpokemon() - 1)
-			{
-				IDpkmadv++;
-				pokemonsav = advptr->getequipe()->getpokemon(IDpkmadv);
-				cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
-				cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
-				cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
-				cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
-				cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
-				cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
-				cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
-				cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
-				cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
-				cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
-				pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
-				cmbt = true;
-				cmbtatt = false;
-				cmbtpkm.setIsCmbt(true);
-			}// gere le remplacement auto du pkm mort
-			else { cmbt = false; battel = false;  cmbtpkm.setIsCmbt(false); IDpkmadv = 0; advptr->setdown(true); } // si tt les pkm sont mort flag pnj down
-		}
-
-		if (!cmbt)// si on est pas en cmbt on check qu'il y en a pas un a declencher, tjr faire avant majposchgmap !!!!!
-		{
-			detercmbpkm(mapptr, perso.posmap.x, perso.posmap.y, &isattackable, herbe.Sherbe, &cmbt, chgmap);
-			deterbattel(&battel, &alladv, &perso, mapptr, rien, herbe, &advptr);
-			if ((cmbt)||(battel)) { 
-				if (!battel) { pokemonsav = genererPokemon(bestiaire); }
-				else {pokemonsav = advptr->getequipe()->getpokemon(0); cmbt = true;}
-				affnoircmbt2(&window, fnoir.Sfnoir,mapptr,speech,herbe.Sherbe,fond.Sfond,rien.Srien,arbre.Sarbre,perso,pnjptr->text,bulle);
-				//affnoircmbt(&window, fnoir.Sfnoir);
-				pokemonsav.majsprite(bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemonsav.getnom(), bestiaire)].cheminface);
-				cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
-				cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
-				cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
-				cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
-				cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
-				cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
-				cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
-				cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
-				cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
-				cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
-				cmbtpkm.setIsCmbt(true);
-				if (EquiIsDead) { cmbt = false; cmbtpkm.setIsCmbt(false); perso.posmap = ini; } // si declenche un cmbt alors que pkm tous mort on respawn
-			}
-		} // determine si il y a un cmbt
+		if ((!cmbt)&&(!battel))// si on est pas en cmbt on check qu'il y en a pas un a declencher, tjr faire avant majposchgmap !!!!!
+			launchCmbtBattel(&window, speech, EquiIsDead, battel, isattackable, cmbt, chgmap, mapptr, perso, herbe, rien, arbre, fond, fnoir, bulle, pnjptr, alladv, &advptr, pokemonsav,  pokemoncmbtptr, bestiaire, cmbtdeco, cmbtpkm, ini);
 
 		majvente(&shopdeco, IDobjvente);//gere le gras
-		majpkmcmbt(&pokemoncmbtptr, equipe, IDpkmequi);
+		majpkmcmbt(&pokemoncmbtptr, equipe, IDpkmequi);//meta jours les info du pkm de combat
 		majmenu(IDlignemenu, &menudeco); //gere le gras
 		majmenuini(IDlignemenuini, &menudeco); // gere le gras ds un menu qui n'apparait qu'au demarrage
 		majmenucmbt(IDlignemenucmbt, IDcolonemenucmbt, choixmenucmbt1, &cmbtdeco); // gere le gras
@@ -371,91 +327,17 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 		if(pagemenu != 'I'){
 			pokemoncmbtptr.majsprite(bestiaire[chercher(pokemoncmbtptr.getnom(), bestiaire)].cheminback, bestiaire[chercher(pokemoncmbtptr.getnom(), bestiaire)].cheminface); // met a jour l'image du pkm qui vas combattre
 		}//si l'on a pas choisi entre nouvel partie ou charger on ne peut avoir un pkm de combat
-		if (P1IsDead && !EquiIsDead) 
-		{ 
-			if (IDpkmequi<equipe->getnbpokemon() -1)
-			{ 
-				IDpkmequi++; 
-				pokemoncmbtptr = equipe->getpokemon(IDpkmequi); 
-				P1IsDead = false; 
-				cmbtpkm.setIsPkmEquiDead(false);
-				cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
-				cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
-				cmbtdeco.textatt1.setString(pokemoncmbtptr.getatt1());
-				cmbtdeco.textatt2.setString(pokemoncmbtptr.getatt2());
-				cmbtdeco.textatt3.setString(pokemoncmbtptr.getatt3());
-				cmbtdeco.textatt4.setString(pokemoncmbtptr.getatt4());
-				cmbtdeco.textnompkm.setString(pokemoncmbtptr.getnom());
-				cmbtdeco.textnompkmsav.setString(pokemonsav.getnom());
-				cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
-				cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
-				cmbt = true;
-				cmbtpkm.setIsCmbt(true);
-				cmbtatt = false;
-			}// gere le remplacement auto du pkm mort
-			else { cmbt = false; cmbtatt = false;  cmbtpkm.setIsCmbt(false);  perso.posmap = ini; IDpkmequi = 0; P1IsDead = true; cmbtpkm.setIsPkmEquiDead(true); EquiIsDead = true; } // si tt les pkm sont mort alors reswpan et on flag equipe morte
-		} 
 		
 		cmbtdeco.majtextecmbt(inttostring(mesressource->getpokeball()), inttostring(mesressource->getpotion()));//met a jours le nb de popo et poke dans le menu combat
 		if (cmbtatt && !cmbtatttrigger) { cmbtatttrigger = true; clk.restart(); } //restart the clock when an animation begin
-		if(cmbtatt)
-		{
-			time = clk.getElapsedTime(); 
-			if (cmbtpkm.getpkmequifirst()) 
-			{
-				if ((cmbtpkm.getdgtattpkmequi() == 0)&&(time.asSeconds() < 2)) //soin 
-				{ 
-					cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV() + cmbtpkm.getdgtpkmsauv()) / (float)(pokemoncmbtptr.getPV()), 'E'); //on montre dabord la vie avant les degats du pkm sauvage
-					cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV() + cmbtpkm.getdgtpkmsauv()));
-				}
-				if (time.asSeconds() < 2) { attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmequi(), &pokemoncmbtptr, cmbtpkm.getdgtattpkmequi(), cmbtpkm.getdgtpkmequi(), &effect, cmbtpkm.gettypeequi(), 'B'); }
-				else if(time.asSeconds() < 4) 
-				{ 
-					cmbt = cmbtpkm.getIsCmbt();
-					if(!cmbt){
-						cmbtatt = false;
-						cmbtatttrigger = false;}
-					cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
-					cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
-					attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmsauv(), &pokemonsav, cmbtpkm.getdgtattpkmsauv(), cmbtpkm.getdgtpkmsauv(), &effect, cmbtpkm.gettypesauv(), 'F'); 
-				}
-				else 
-				{
-					cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
-					cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
-					cmbtatt = false; 
-					cmbtatttrigger = false; 
-					P1IsDead = cmbtpkm.getIsPkmEquiDead();
-				}
-			}
-			else 
-			{
-				if (time.asSeconds() < 2) { attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmsauv(), &pokemonsav, cmbtpkm.getdgtattpkmsauv(), cmbtpkm.getdgtpkmsauv(), &effect, cmbtpkm.gettypesauv(), 'F'); }
-				else if (time.asSeconds() < 4) 
-				{ 
-					P1IsDead = cmbtpkm.getIsPkmEquiDead();
-					if(P1IsDead){ 
-						cmbtatt = false; 
-						cmbtatttrigger = false;}
-					cmbtdeco.majbarrevie((float)(pokemoncmbtptr.getactPV()) / (float)(pokemoncmbtptr.getPV()), 'E');
-					cmbtdeco.textviepkm.setString(inttostring(pokemoncmbtptr.getactPV()));
-					attstr = majeffectatt(&cmbtdeco, cmbtpkm.getmultpkmequi(), &pokemoncmbtptr, cmbtpkm.getdgtattpkmequi(), cmbtpkm.getdgtpkmequi(), &effect, cmbtpkm.gettypeequi(), 'B'); 
-				}
-				else 
-				{ 
-					cmbtdeco.majbarrevie((float)(pokemonsav.getactPV()) / (float)(pokemonsav.getPV()), 'S');
-					cmbtdeco.textviepkmsav.setString(inttostring(pokemonsav.getactPV()));
-					cmbtatt = false; 
-					cmbtatttrigger = false; 
-					cmbt = cmbtpkm.getIsCmbt();
-					
-				}
-			}
-		}
+		if(cmbtatt){majTextAnnimation(attstr, P1IsDead, cmbtatttrigger,cmbt, cmbtatt, clk, cmbtpkm, cmbtdeco, pokemoncmbtptr, pokemonsav, effect);}
 		
-		
-		
-		
+		if ((pokemonsav.getactPV() <= 0) && battel && !cmbtatt) //si le pkm de l'adversaire est mort on le switch ou on arrette le combat si il n'en a plus
+			switchPkmAdv(battel, cmbt, cmbtatt, IDpkmadv, advptr, pokemonsav, pokemoncmbtptr, cmbtdeco, bestiaire, cmbtpkm);
+
+		if (P1IsDead && !EquiIsDead && !cmbtatt) //si le pkm de l'equipe est mort on le switch ou on arrette le combat et on respawn
+			switchPkmEqui(EquiIsDead, P1IsDead, battel, cmbt, cmbtatt, IDpkmequi, equipe, pokemonsav, pokemoncmbtptr, cmbtdeco, bestiaire, cmbtpkm, perso, ini);
+
 		window.clear();
 		if (cmbt) // si on est en combat on n'a pas acces au menu
 		{
@@ -503,7 +385,7 @@ int main() //(niv * 0.4 +2)*force*dgtatt/(defadverse * 50) +2
 // equilibrage du jeux (stats, power up, degat, capture, fuite, money
 // rareter pkm -- zone de type
 // animation de combat
-// PNJ agrro
+// afficher nb de pokemon de l'adversaire
 // fct insertion deco izi
 // echange de pkm en cmbt
 // decorer la map

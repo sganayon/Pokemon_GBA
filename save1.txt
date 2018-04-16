@@ -1,5 +1,5 @@
-22
-19
+70
+33
 22
 11
 0
@@ -294,7 +294,7 @@ charge
 0
 5
 Parasect
-476
+-114
 charge
 Piqure
 envahissement
@@ -308,9 +308,9 @@ Lethargie
 110
 476
 1
-0
+100
 Gyarados
-747
+12
 charge
 Bulle
 inondation
@@ -324,7 +324,7 @@ Tsunamie
 159
 747
 1
-0
+500
 Dratini
 417
 charge
@@ -375,6 +375,7 @@ charge
 0
 9
 6
-11100
-659850
+11700
+1114089
+1
 END

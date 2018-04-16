@@ -261,6 +261,11 @@ Combatdeco::Combatdeco(void)
 	Sbarrevie.setTexture(Tbarrevie);
 	Sbarrevie.setPosition(582.f, 338.f);
 
+	Tpokeball.loadFromFile(pokeballstr);
+	Spokeball.setTexture(Tpokeball);
+	Spokeball.setPosition(51.f, 111.f);
+	Spokeball.setTextureRect(sf::IntRect(0, 0, 0, 0));//on n'affiche pas les pokeball en combat classique (plus souvent present)
+
 	font.loadFromFile(fontstr);
 
 	textatt.setFont(font);
